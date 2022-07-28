@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&family=Source+Sans+Pro:wght@400;700;900&display=swap');
+
+$accent: rgb(245, 155, 0);
+
+html,
+body {
+  #dolineo-cennik-wrapper {
+    font-family: 'Source Sans Pro', sans-serif;
+    color: #111;
+  }
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#app {
+  width: 100% !important;
+  margin: 0 auto !important;
+}
