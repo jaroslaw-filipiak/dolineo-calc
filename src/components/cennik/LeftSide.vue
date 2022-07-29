@@ -13,7 +13,7 @@
           </p>
 
           <div class="switcher">
-            <Toggle v-model="platform" />
+            <Toggle @change="updateDataInAllModules" v-model="platform" />
           </div>
         </div>
         <div class="options__hold"><ul class="buttons"></ul></div>
@@ -26,7 +26,7 @@
             szkoleń
           </p>
           <div class="switcher">
-            <Toggle v-model="feedback" />
+            <Toggle @change="updateDataInAllModules" v-model="feedback" />
           </div>
         </div>
         <div class="options__hold"><ul class="buttons"></ul></div>
@@ -39,7 +39,7 @@
             szkoleń
           </p>
           <div class="switcher">
-            <Toggle v-model="management" />
+            <Toggle @change="updateDataInAllModules" v-model="management" />
           </div>
         </div>
         <div class="options__hold"><ul class="buttons"></ul></div>
@@ -58,6 +58,20 @@ export default {
     const store = useStore();
 
     return {
+      updateDataInAllModules: computed(() => {
+        const activePlatform = store.state.activeModules.platform;
+        const activeFeedback = store.state.activeModules.feedback;
+        const activeManagement = store.state.activeModules.management;
+        const activeAll = false;
+
+        if (activePlatform & activeFeedback & activeManagement) {
+          store.commit('setAllModulesToActive', true);
+          return activePlatform;
+        } else {
+          store.commit('setAllModulesToActive', false);
+          return activePlatform;
+        }
+      }),
       platform: computed({
         get() {
           return store.state.activeModules.platform;
