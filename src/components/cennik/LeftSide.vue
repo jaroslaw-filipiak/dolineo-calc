@@ -14,7 +14,6 @@
 
           <div class="switcher">
             <Toggle v-model="platform" />
-            <div>{{ platform }}</div>
           </div>
         </div>
         <div class="options__hold"><ul class="buttons"></ul></div>
@@ -28,7 +27,6 @@
           </p>
           <div class="switcher">
             <Toggle v-model="feedback" />
-            <div>{{ feedback }}</div>
           </div>
         </div>
         <div class="options__hold"><ul class="buttons"></ul></div>
@@ -42,7 +40,6 @@
           </p>
           <div class="switcher">
             <Toggle v-model="management" />
-            <div>{{ management }}</div>
           </div>
         </div>
         <div class="options__hold"><ul class="buttons"></ul></div>

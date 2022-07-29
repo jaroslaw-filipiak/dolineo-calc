@@ -17,9 +17,7 @@
     </div>
 
     <div class="dolineo-range-slider--subtitle">
-      Liczba pracowników: {{ employeValue }} osób (
-      <small>{{ value }}</small>
-      )
+      Liczba pracowników: {{ employeValue }} osób
     </div>
   </div>
 </template>

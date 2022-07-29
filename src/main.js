@@ -7,19 +7,11 @@ import './scss/main.scss';
 const store = createStore({
   state() {
     return {
-      cartMonthly: {
+      cart: {
         platform: null,
         feedback: null,
         management: null,
-        yearly: false,
-        monthly: true,
-      },
-      cartYearly: {
-        platform: null,
-        feedback: null,
-        management: null,
-        yearly: true,
-        monthly: false,
+        monthly: null,
       },
       rangeSlider: {
         value: 55,
@@ -33,7 +25,7 @@ const store = createStore({
         feedback: false, //Feedback360/Ocena okresowa
         management: false, //Zarządzanie przez cele
       },
-      platformPricingMonthly: {
+      platformPricing: {
         up30: 673,
         up31: 879,
         up51: 1067,
@@ -44,18 +36,8 @@ const store = createStore({
         up600: 2147,
         up800: 2516,
       },
-      platformPricingYearly: {
-        up30: 6864,
-        up31: 8964,
-        up51: 10886,
-        up100: 13068,
-        up200: 14558,
-        up300: 16016,
-        up450: 19008,
-        up600: 21902,
-        up800: 25661,
-      },
-      feedbackPricingMonthly: {
+
+      feedbackPricing: {
         up30: 1048,
         up31: 1048,
         up51: 1048,
@@ -66,18 +48,8 @@ const store = createStore({
         up600: 2531,
         up800: 2742,
       },
-      feedbackPricingYearly: {
-        up30: 10692,
-        up31: 10692,
-        up51: 10692,
-        up100: 16092,
-        up200: 18252,
-        up300: 20412,
-        up450: 22572,
-        up600: 25812,
-        up800: 27972,
-      },
-      managementPricingMonthly: {
+
+      managementPricing: {
         up30: 1048,
         up31: 1048,
         up51: 1048,
@@ -88,17 +60,7 @@ const store = createStore({
         up600: 2531,
         up800: 2742,
       },
-      managementPricingYearly: {
-        up30: 10692,
-        up31: 10692,
-        up51: 10692,
-        up100: 16092,
-        up200: 18252,
-        up300: 20412,
-        up450: 22572,
-        up600: 25812,
-        up800: 27972,
-      },
+
       isSelectedMonthly: true,
       isSelectedYearly: false,
     };
@@ -127,9 +89,15 @@ const store = createStore({
         state.cart.monthly = false;
       }
     },
-    // updatePlatformInCart(state, payload) {
-    //   state.cart.platform = payload;
-    // },
+    updatePlatformPricing(state, payload) {
+      state.cart.platform = payload;
+    },
+    updateFeedbackPricing(state, payload) {
+      state.cart.feedback = payload;
+    },
+    updateManagementPricing(state, payload) {
+      state.cart.management = payload;
+    },
   },
 });
 
