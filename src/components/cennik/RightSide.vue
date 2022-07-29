@@ -92,6 +92,7 @@
             class="total__value"
           >
             {{ CartPlatform }} PLN
+            <span class="second__month__indicator">/ 1 m-с</span>
           </div>
 
           <!--  only feedback-->
@@ -105,6 +106,7 @@
             class="total__value"
           >
             {{ CartFeedback }} PLN
+            <span class="second__month__indicator">/ 1 m-с</span>
           </div>
 
           <!-- only management -->
@@ -118,6 +120,7 @@
             class="total__value"
           >
             {{ CartManagement }} PLN
+            <span class="second__month__indicator">/ 1 m-с</span>
           </div>
 
           <!-- feedback + management -->
@@ -126,10 +129,13 @@
             v-if="isActiveModuleFeedback & isActiveModuleManagement"
             class="total__value"
           >
-            {{ Math.ceil(CartManagement * 1.8) }} PLN
-          </div>
+            {{ Math.round(CartManagement * 1.8) }} PLN
+            <span class="second__month__indicator">/ 1 m-с</span> <br />
 
-          <span class="second__month__indicator">/ 1 m-с</span>
+            <p class="extra-second-option">
+              (uwzględniono: zniżka 20% na drugi system)
+            </p>
+          </div>
         </div>
         <!-- <p class="slider__indicators">31-50 pracowników</p>
         <p class="worker__price">17.58 PLN / 1 PRACOWNIK MIESIĘCZNIE</p> -->
@@ -142,7 +148,7 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 
 export default {
@@ -150,6 +156,7 @@ export default {
     const store = useStore();
 
     return {
+      ref,
       handleSelectedPeriod: (e) => {
         const itemRef = e.target.__vnode.ref.r;
         console.log(itemRef);
@@ -1380,5 +1387,12 @@ export default {
   padding: 0;
   font-weight: 400;
   font-size: 15px;
+}
+
+.extra-second-option {
+  color: #4b4647;
+  font-size: 15px;
+  font-weight: 400;
+  text-align: center;
 }
 </style>
