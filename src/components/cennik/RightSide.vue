@@ -87,7 +87,8 @@
             v-if="
               isActiveModulePlatform &
               !isActiveModuleFeedback &
-              !isActiveModuleManagement
+              !isActiveModuleManagement &
+              !AllModulesActive
             "
             class="total__value"
           >
@@ -101,7 +102,8 @@
             v-if="
               isActiveModuleFeedback &
               !isActiveModulePlatform &
-              !isActiveModuleManagement
+              !isActiveModuleManagement &
+              !AllModulesActive
             "
             class="total__value"
           >
@@ -115,7 +117,8 @@
             v-if="
               isActiveModuleManagement &
               !isActiveModulePlatform &
-              !isActiveModuleFeedback
+              !isActiveModuleFeedback &
+              !AllModulesActive
             "
             class="total__value"
           >
@@ -126,7 +129,11 @@
           <!-- feedback + management -->
 
           <div
-            v-if="isActiveModuleFeedback & isActiveModuleManagement"
+            v-if="
+              isActiveModuleFeedback &
+              isActiveModuleManagement &
+              !AllModulesActive
+            "
             class="total__value"
           >
             {{ Math.round(CartManagement * 1.8) }} PLN
@@ -143,7 +150,8 @@
             v-if="
               isActiveModulePlatform &
               isActiveModuleManagement &
-              isActivePeriodMonthly
+              isActivePeriodMonthly &
+              !AllModulesActive
             "
             class="total__value"
           >
@@ -161,7 +169,8 @@
             v-if="
               isActiveModulePlatform &
               isActiveModuleFeedback &
-              isActivePeriodMonthly
+              isActivePeriodMonthly &
+              !AllModulesActive
             "
             class="total__value"
           >
@@ -179,7 +188,8 @@
             v-if="
               isActiveModulePlatform &
               isActiveModuleManagement &
-              isActivePeriodYearly
+              isActivePeriodYearly &
+              !AllModulesActive
             "
             class="total__value"
           >
@@ -195,7 +205,8 @@
             v-if="
               isActiveModulePlatform &
               isActiveModuleFeedback &
-              isActivePeriodYearly
+              isActivePeriodYearly &
+              !AllModulesActive
             "
             class="total__value"
           >
@@ -215,9 +226,8 @@
               AllModulesActive
             "
             class="total__value"
-            style="display: none"
           >
-            {{ Math.round(CartPlatform + CartManagement * 1.8) }} PLN
+            {{ Math.ceil(CartPlatform + CartFeedback * 1.8) }} PLN
             <span class="second__month__indicator">/ 1 m-с</span> <br />
 
             <p class="extra-second-option">
@@ -237,7 +247,7 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { useStore } from 'vuex';
 
 export default {
@@ -245,13 +255,7 @@ export default {
     const store = useStore();
 
     return {
-      ref,
       handleSelectedPeriod: (e) => {
-        // const itemRef = e.target.__vnode.ref.r;
-        // console.log(itemRef);
-
-        // console.log(itemRef);
-
         const attr = e.target.getAttribute('data-value');
         store.commit('updatePeriod', attr);
       },
@@ -269,14 +273,7 @@ export default {
       }),
 
       AllModulesActive: computed(() => {
-        const modulePlatform = store.state.activeModules.platform;
-        const moduleFeedback = store.state.activeModules.feedback;
-        const moduleManagement = store.state.activeModules.management;
-
-        if (modulePlatform & moduleFeedback & moduleManagement) {
-          store.commit('setAllModulesToActive', true);
-        }
-        return store.state.AllModulesActive;
+        return store.state.allModulesAreActive;
       }),
 
       isActiveModulePlatform: computed(() => {

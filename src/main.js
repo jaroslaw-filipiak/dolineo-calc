@@ -20,12 +20,13 @@ const store = createStore({
         tooltips: false,
         lazy: false,
       },
+      allModulesAreActive: false,
       activeModules: {
         platform: true, //Platforma e-learningowa z katalogiem szkoleń gotowych
         feedback: false, //Feedback360/Ocena okresowa
         management: false, //Zarządzanie przez cele
       },
-      allModulesAreActive: false,
+
       platformPricing: {
         up30: 673,
         up31: 879,
