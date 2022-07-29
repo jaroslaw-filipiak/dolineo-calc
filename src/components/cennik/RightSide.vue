@@ -8,17 +8,11 @@
 
           <div v-show="isActiveModulePlatform" class="item__holder__option">
             <div class="cart__header__div">
-              <h1 class="cart__header">
-                Platforma z katalogiem szkoleń {{ isActiveModulePlatform }}
-              </h1>
+              <h1 class="cart__header">Platforma z katalogiem szkoleń</h1>
             </div>
             <div class="price__final__holder">
               <span> + </span
-              ><span class="price__by__module">{{
-                isActivePeriodMonthly
-                  ? calculatedPlatformPricingMonthly
-                  : Math.round(calculatedPlatformPricingYearly)
-              }}</span
+              ><span class="price__by__module">{{ PlatformPricing }}</span
               ><span>
                 PLN
                 <span class="first__month__indicator"> / 1 m-с </span>
@@ -32,17 +26,11 @@
         <div v-show="isActiveModuleFeedback" class="analiza__item">
           <div class="item__holder__option">
             <div class="cart__header__div">
-              <h1 class="cart__header">
-                Feedback360/Ocena okresowa {{ isActiveModuleFeedback }}
-              </h1>
+              <h1 class="cart__header">Feedback360/Ocena okresowa</h1>
             </div>
             <div class="price__final__holder">
               <span> + </span
-              ><span class="price__by__module">{{
-                isActivePeriodMonthly
-                  ? calculatedFeedbackPricingMonthly
-                  : Math.round(calculatedFeedbackPricingYearly)
-              }}</span
+              ><span class="price__by__module">{{ FeedbackPricing }}</span
               ><span>
                 PLN
                 <span class="first__month__indicator"> / 1 m-с </span>
@@ -56,17 +44,11 @@
         <div v-show="isActiveModuleManagement" class="analiza__item">
           <div class="item__holder__option">
             <div class="cart__header__div">
-              <h1 class="cart__header">
-                Zarządzanie przez cele {{ isActiveModuleManagement }}
-              </h1>
+              <h1 class="cart__header">Zarządzanie przez cele</h1>
             </div>
             <div class="price__final__holder">
               <span> + </span
-              ><span class="price__by__module">{{
-                isActivePeriodMonthly
-                  ? calculatedManagementPricingMonthly
-                  : Math.round(calculatedManagementPricingYearly)
-              }}</span
+              ><span class="price__by__module">{{ ManagementPricing }}</span
               ><span>
                 PLN <span class="first__month__indicator">/ 1 m-с</span>
               </span>
@@ -100,7 +82,53 @@
 
       <div class="bottom_elements">
         <div class="price__holder">
-          <h1 class="total__value">PLN</h1>
+          <!-- only platform -->
+          <div
+            v-if="
+              isActiveModulePlatform &
+              !isActiveModuleFeedback &
+              !isActiveModuleManagement
+            "
+            class="total__value"
+          >
+            {{ CartPlatform }} PLN
+          </div>
+
+          <!--  only feedback-->
+
+          <div
+            v-if="
+              isActiveModuleFeedback &
+              !isActiveModulePlatform &
+              !isActiveModuleManagement
+            "
+            class="total__value"
+          >
+            {{ CartFeedback }} PLN
+          </div>
+
+          <!-- only management -->
+
+          <div
+            v-if="
+              isActiveModuleManagement &
+              !isActiveModulePlatform &
+              !isActiveModuleFeedback
+            "
+            class="total__value"
+          >
+            {{ CartManagement }} PLN
+          </div>
+
+          <!-- feedback + management -->
+
+          <div
+            v-if="isActiveModuleFeedback & isActiveModuleManagement"
+            class="total__value"
+          >
+            {{ Math.ceil(CartManagement * 1.8) }} PLN
+          </div>
+
           <span class="second__month__indicator">/ 1 m-с</span>
         </div>
         <!-- <p class="slider__indicators">31-50 pracowników</p>
@@ -116,28 +144,31 @@
 <script>
 import { computed } from 'vue';
 import { useStore } from 'vuex';
+
 export default {
   setup() {
     const store = useStore();
 
     return {
-      // cart: computed(() => {
-      //   const platform = store.state.cart.platform;
-      //   const feedback = store.state.cart.feedback;
-      //   const management = store.state.cart.management;
-      //   const isMonthly = store.state.cart.monthly;
-      //   const result = platform + feedback + management;
-      //   const resultYearly = Math.round(
-      //     (platform + feedback + management) / 12
-      //   );
-
-      //   return isMonthly ? result : resultYearly;
-      // }),
       handleSelectedPeriod: (e) => {
         const itemRef = e.target.__vnode.ref.r;
         console.log(itemRef);
         store.commit('updatePeriod', itemRef);
+        console.log(itemRef);
       },
+
+      CartPlatform: computed(() => {
+        return store.state.cart.platform;
+      }),
+
+      CartFeedback: computed(() => {
+        return store.state.cart.feedback;
+      }),
+
+      CartManagement: computed(() => {
+        return store.state.cart.management;
+      }),
+
       isActiveModulePlatform: computed(() => {
         return store.state.activeModules.platform;
       }),
@@ -147,377 +178,540 @@ export default {
       isActiveModuleManagement: computed(() => {
         return store.state.activeModules.management;
       }),
-      calculatedPlatformPricingMonthly: computed(() => {
-        if (store.state.rangeSlider.value <= 30) {
-          store.commit(
-            'updatePlatformInCart',
-            store.state.platformPricingMonthly.up30
-          );
-          return store.state.platformPricingMonthly.up30;
-        } else if (
-          (store.state.rangeSlider.value >= 31) &
-          (store.state.rangeSlider.value < 51)
-        ) {
-          store.commit(
-            'updatePlatformInCart',
-            store.state.platformPricingMonthly.up31
-          );
-          return store.state.platformPricingMonthly.up31;
-        } else if (
-          (store.state.rangeSlider.value >= 51) &
-          (store.state.rangeSlider.value < 101)
-        ) {
-          store.commit(
-            'updatePlatformInCart',
-            store.state.platformPricingMonthly.up51
-          );
-          return store.state.platformPricingMonthly.up51;
-        } else if (
-          (store.state.rangeSlider.value >= 101) &
-          (store.state.rangeSlider.value < 201)
-        ) {
-          store.commit(
-            'updatePlatformInCart',
-            store.state.platformPricingMonthly.up100
-          );
-          return store.state.platformPricingMonthly.up100;
-        } else if (
-          (store.state.rangeSlider.value >= 201) &
-          (store.state.rangeSlider.value < 301)
-        ) {
-          store.commit(
-            'updatePlatformInCart',
-            store.state.platformPricingMonthly.up200
-          );
-          return store.state.platformPricingMonthly.up200;
-        } else if (
-          (store.state.rangeSlider.value >= 301) &
-          (store.state.rangeSlider.value < 451)
-        ) {
-          store.commit(
-            'updatePlatformInCart',
-            store.state.platformPricingMonthly.up300
-          );
-          return store.state.platformPricingMonthly.up300;
-        } else if (
-          (store.state.rangeSlider.value >= 451) &
-          (store.state.rangeSlider.value < 601)
-        ) {
-          store.commit(
-            'updatePlatformInCart',
-            store.state.platformPricingMonthly.up450
-          );
-          return store.state.platformPricingMonthly.up450;
-        } else if (
-          (store.state.rangeSlider.value >= 601) &
-          (store.state.rangeSlider.value < 801)
-        ) {
-          store.commit(
-            'updatePlatformInCart',
-            store.state.platformPricingMonthly.up600
-          );
-          return store.state.platformPricingMonthly.up600;
-        } else if (
-          (store.state.rangeSlider.value >= 801) &
-          (store.state.rangeSlider.value < 1001)
-        ) {
-          store.commit(
-            'updatePlatformInCart',
-            store.state.platformPricingMonthly.up800
-          );
-          return store.state.platformPricingMonthly.up800;
-        } else {
-          return '';
-        }
-      }),
-
-      calculatedPlatformPricingYearly: computed(() => {
-        if (store.state.rangeSlider.value <= 30) {
-          store.commit(
-            'updatePlatformInCart',
-            store.state.platformPricingYearly.up30
-          );
-          return store.state.platformPricingYearly.up30;
-        } else if (
-          (store.state.rangeSlider.value >= 31) &
-          (store.state.rangeSlider.value < 51)
-        ) {
-          store.commit(
-            'updatePlatformInCart',
-            store.state.platformPricingYearly.up31
-          );
-          return store.state.platformPricingYearly.up31;
-        } else if (
-          (store.state.rangeSlider.value >= 51) &
-          (store.state.rangeSlider.value < 101)
-        ) {
-          store.commit(
-            'updatePlatformInCart',
-            store.state.platformPricingYearly.up51
-          );
-          return store.state.platformPricingYearly.up51;
-        } else if (
-          (store.state.rangeSlider.value >= 101) &
-          (store.state.rangeSlider.value < 201)
-        ) {
-          store.commit(
-            'updatePlatformInCart',
-            store.state.platformPricingYearly.up100
-          );
-          return store.state.platformPricingYearly.up100;
-        } else if (
-          (store.state.rangeSlider.value >= 201) &
-          (store.state.rangeSlider.value < 301)
-        ) {
-          store.commit(
-            'updatePlatformInCart',
-            store.state.platformPricingYearly.up200
-          );
-          return store.state.platformPricingYearly.up200;
-        } else if (
-          (store.state.rangeSlider.value >= 301) &
-          (store.state.rangeSlider.value < 451)
-        ) {
-          store.commit(
-            'updatePlatformInCart',
-            store.state.platformPricingYearly.up300
-          );
-          return store.state.platformPricingYearly.up300;
-        } else if (
-          (store.state.rangeSlider.value >= 451) &
-          (store.state.rangeSlider.value < 601)
-        ) {
-          store.commit(
-            'updatePlatformInCart',
-            store.state.platformPricingYearly.up450
-          );
-          return store.state.platformPricingYearly.up450;
-        } else if (
-          (store.state.rangeSlider.value >= 601) &
-          (store.state.rangeSlider.value < 801)
-        ) {
-          store.commit(
-            'updatePlatformInCart',
-            store.state.platformPricingYearly.up600
-          );
-          return store.state.platformPricingYearly.up600;
-        } else if (
-          (store.state.rangeSlider.value >= 801) &
-          (store.state.rangeSlider.value < 1001)
-        ) {
-          store.commit(
-            'updatePlatformInCart',
-            store.state.platformPricingYearly.up800
-          );
-          return store.state.platformPricingYearly.up800;
-        } else {
-          return '';
-        }
-      }),
-
-      calculatedFeedbackPricingMonthly: computed(() => {
-        if (store.state.rangeSlider.value <= 30) {
-          return store.state.feedbackPricingMonthly.up30;
-        } else if (
-          (store.state.rangeSlider.value >= 31) &
-          (store.state.rangeSlider.value < 51)
-        ) {
-          return store.state.feedbackPricingMonthly.up31;
-        } else if (
-          (store.state.rangeSlider.value >= 51) &
-          (store.state.rangeSlider.value < 101)
-        ) {
-          return store.state.feedbackPricingMonthly.up51;
-        } else if (
-          (store.state.rangeSlider.value >= 101) &
-          (store.state.rangeSlider.value < 201)
-        ) {
-          return store.state.feedbackPricingMonthly.up100;
-        } else if (
-          (store.state.rangeSlider.value >= 201) &
-          (store.state.rangeSlider.value < 301)
-        ) {
-          return store.state.feedbackPricingMonthly.up200;
-        } else if (
-          (store.state.rangeSlider.value >= 301) &
-          (store.state.rangeSlider.value < 451)
-        ) {
-          return store.state.feedbackPricingMonthly.up300;
-        } else if (
-          (store.state.rangeSlider.value >= 451) &
-          (store.state.rangeSlider.value < 601)
-        ) {
-          return store.state.feedbackPricingMonthly.up450;
-        } else if (
-          (store.state.rangeSlider.value >= 601) &
-          (store.state.rangeSlider.value < 801)
-        ) {
-          return store.state.feedbackPricingMonthly.up600;
-        } else if (
-          (store.state.rangeSlider.value >= 801) &
-          (store.state.rangeSlider.value < 1001)
-        ) {
-          return store.state.feedbackPricingMonthly.up800;
-        } else {
-          return '';
-        }
-      }),
-
-      calculatedFeedbackPricingYearly: computed(() => {
-        if (store.state.rangeSlider.value <= 30) {
-          return store.state.feedbackPricingYearly.up30;
-        } else if (
-          (store.state.rangeSlider.value >= 31) &
-          (store.state.rangeSlider.value < 51)
-        ) {
-          return store.state.feedbackPricingYearly.up31;
-        } else if (
-          (store.state.rangeSlider.value >= 51) &
-          (store.state.rangeSlider.value < 101)
-        ) {
-          return store.state.feedbackPricingYearly.up51;
-        } else if (
-          (store.state.rangeSlider.value >= 101) &
-          (store.state.rangeSlider.value < 201)
-        ) {
-          return store.state.feedbackPricingYearly.up100;
-        } else if (
-          (store.state.rangeSlider.value >= 201) &
-          (store.state.rangeSlider.value < 301)
-        ) {
-          return store.state.feedbackPricingYearly.up200;
-        } else if (
-          (store.state.rangeSlider.value >= 301) &
-          (store.state.rangeSlider.value < 451)
-        ) {
-          return store.state.feedbackPricingYearly.up300;
-        } else if (
-          (store.state.rangeSlider.value >= 451) &
-          (store.state.rangeSlider.value < 601)
-        ) {
-          return store.state.feedbackPricingYearly.up450;
-        } else if (
-          (store.state.rangeSlider.value >= 601) &
-          (store.state.rangeSlider.value < 801)
-        ) {
-          return store.state.feedbackPricingYearly.up600;
-        } else if (
-          (store.state.rangeSlider.value >= 801) &
-          (store.state.rangeSlider.value < 1001)
-        ) {
-          return store.state.feedbackPricingYearly.up800;
-        } else {
-          return '';
-        }
-      }),
-
-      calculatedManagementPricingMonthly: computed(() => {
-        if (store.state.rangeSlider.value <= 30) {
-          return store.state.managementPricingMonthly.up30;
-        } else if (
-          (store.state.rangeSlider.value >= 31) &
-          (store.state.rangeSlider.value < 51)
-        ) {
-          return store.state.managementPricingMonthly.up31;
-        } else if (
-          (store.state.rangeSlider.value >= 51) &
-          (store.state.rangeSlider.value < 101)
-        ) {
-          return store.state.managementPricingMonthly.up51;
-        } else if (
-          (store.state.rangeSlider.value >= 101) &
-          (store.state.rangeSlider.value < 201)
-        ) {
-          return store.state.managementPricingMonthly.up100;
-        } else if (
-          (store.state.rangeSlider.value >= 201) &
-          (store.state.rangeSlider.value < 301)
-        ) {
-          return store.state.managementPricingMonthly.up200;
-        } else if (
-          (store.state.rangeSlider.value >= 301) &
-          (store.state.rangeSlider.value < 451)
-        ) {
-          return store.state.managementPricingMonthly.up300;
-        } else if (
-          (store.state.rangeSlider.value >= 451) &
-          (store.state.rangeSlider.value < 601)
-        ) {
-          return store.state.managementPricingMonthly.up450;
-        } else if (
-          (store.state.rangeSlider.value >= 601) &
-          (store.state.rangeSlider.value < 801)
-        ) {
-          return store.state.managementPricingMonthly.up600;
-        } else if (
-          (store.state.rangeSlider.value >= 801) &
-          (store.state.rangeSlider.value < 1001)
-        ) {
-          return store.state.managementPricingMonthly.up800;
-        } else {
-          return '';
-        }
-      }),
-
-      calculatedManagementPricingYearly: computed(() => {
-        if (store.state.rangeSlider.value <= 30) {
-          return store.state.managementPricingYearly.up30;
-        } else if (
-          (store.state.rangeSlider.value >= 31) &
-          (store.state.rangeSlider.value < 51)
-        ) {
-          return store.state.managementPricingYearly.up31;
-        } else if (
-          (store.state.rangeSlider.value >= 51) &
-          (store.state.rangeSlider.value < 101)
-        ) {
-          return store.state.managementPricingYearly.up51;
-        } else if (
-          (store.state.rangeSlider.value >= 101) &
-          (store.state.rangeSlider.value < 201)
-        ) {
-          return store.state.managementPricingYearly.up100;
-        } else if (
-          (store.state.rangeSlider.value >= 201) &
-          (store.state.rangeSlider.value < 301)
-        ) {
-          return store.state.managementPricingYearly.up200;
-        } else if (
-          (store.state.rangeSlider.value >= 301) &
-          (store.state.rangeSlider.value < 451)
-        ) {
-          return store.state.managementPricingYearly.up300;
-        } else if (
-          (store.state.rangeSlider.value >= 451) &
-          (store.state.rangeSlider.value < 601)
-        ) {
-          return store.state.managementPricingYearly.up450;
-        } else if (
-          (store.state.rangeSlider.value >= 601) &
-          (store.state.rangeSlider.value < 801)
-        ) {
-          return store.state.managementPricingYearly.up600;
-        } else if (
-          (store.state.rangeSlider.value >= 801) &
-          (store.state.rangeSlider.value < 1001)
-        ) {
-          return store.state.managementPricingYearly.up800;
-        } else {
-          return '';
-        }
-      }),
-
       isActivePeriodYearly: computed(() => {
         return store.state.isSelectedYearly;
       }),
-
       isActivePeriodMonthly: computed(() => {
         return store.state.isSelectedMonthly;
       }),
-
       rangeSliderValue: computed(() => {
         return store.state.rangeSlider.value;
       }),
+
+      PlatformPricing: computed(() => {
+        const value = store.state.rangeSlider.value;
+        const isActivePeriodMonthly = store.state.isSelectedMonthly;
+        const isActivePeriodYearly = store.state.isSelectedYearly;
+
+        // wow spaghetti code ! xd
+
+        if ((value <= 30) & isActivePeriodMonthly) {
+          store.commit(
+            'updatePlatformPricing',
+            store.state.platformPricing.up30
+          );
+
+          return store.state.platformPricing.up30;
+        } else if ((value > 30) & (value <= 50) & isActivePeriodMonthly) {
+          store.commit(
+            'updatePlatformPricing',
+            store.state.platformPricing.up31
+          );
+          return store.state.platformPricing.up31;
+        } else if ((value > 50) & (value <= 100) & isActivePeriodMonthly) {
+          store.commit(
+            'updatePlatformPricing',
+            store.state.platformPricing.up51
+          );
+          return store.state.platformPricing.up51;
+        } else if ((value > 100) & (value <= 200) & isActivePeriodMonthly) {
+          store.commit(
+            'updatePlatformPricing',
+            store.state.platformPricing.up100
+          );
+          return store.state.platformPricing.up100;
+        } else if ((value > 200) & (value <= 300) & isActivePeriodMonthly) {
+          store.commit(
+            'updatePlatformPricing',
+            store.state.platformPricing.up200
+          );
+          return store.state.platformPricing.up200;
+        } else if ((value > 300) & (value <= 450) & isActivePeriodMonthly) {
+          store.commit(
+            'updatePlatformPricing',
+            store.state.platformPricing.up300
+          );
+          return store.state.platformPricing.up300;
+        } else if ((value > 450) & (value <= 600) & isActivePeriodMonthly) {
+          store.commit(
+            'updatePlatformPricing',
+            store.state.platformPricing.up450
+          );
+          return store.state.platformPricing.up450;
+        } else if ((value > 600) & (value <= 800) & isActivePeriodMonthly) {
+          store.commit(
+            'updatePlatformPricing',
+            store.state.platformPricing.up600
+          );
+          return store.state.platformPricing.up600;
+        } else if ((value > 800) & (value <= 1000) & isActivePeriodMonthly) {
+          store.commit(
+            'updatePlatformPricing',
+            store.state.platformPricing.up800
+          );
+          return store.state.platformPricing.up800;
+        } else if ((value <= 30) & isActivePeriodYearly) {
+          store.commit(
+            'updatePlatformPricing',
+            Math.round(
+              store.state.platformPricing.up30 -
+                store.state.platformPricing.up30 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.platformPricing.up30 -
+              store.state.platformPricing.up30 * 0.15
+          );
+        } else if ((value > 30) & (value <= 50) & isActivePeriodYearly) {
+          store.commit(
+            'updatePlatformPricing',
+            Math.round(
+              store.state.platformPricing.up31 -
+                store.state.platformPricing.up31 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.platformPricing.up31 -
+              store.state.platformPricing.up31 * 0.15
+          );
+        } else if ((value > 50) & (value <= 100) & isActivePeriodYearly) {
+          store.commit(
+            'updatePlatformPricing',
+            Math.round(
+              store.state.platformPricing.up51 -
+                store.state.platformPricing.up51 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.platformPricing.up51 -
+              store.state.platformPricing.up51 * 0.15
+          );
+        } else if ((value > 100) & (value <= 200) & isActivePeriodYearly) {
+          store.commit(
+            'updatePlatformPricing',
+            Math.round(
+              store.state.platformPricing.up100 -
+                store.state.platformPricing.up100 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.platformPricing.up100 -
+              store.state.platformPricing.up100 * 0.15
+          );
+        } else if ((value > 200) & (value <= 300) & isActivePeriodYearly) {
+          store.commit(
+            'updatePlatformPricing',
+            Math.round(
+              store.state.platformPricing.up200 -
+                store.state.platformPricing.up200 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.platformPricing.up200 -
+              store.state.platformPricing.up200 * 0.15
+          );
+        } else if ((value > 300) & (value <= 450) & isActivePeriodYearly) {
+          store.commit(
+            'updatePlatformPricing',
+            Math.round(
+              store.state.platformPricing.up300 -
+                store.state.platformPricing.up300 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.platformPricing.up300 -
+              store.state.platformPricing.up300 * 0.15
+          );
+        } else if ((value > 450) & (value <= 600) & isActivePeriodYearly) {
+          store.commit(
+            'updatePlatformPricing',
+            Math.round(
+              store.state.platformPricing.up450 -
+                store.state.platformPricing.up450 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.platformPricing.up450 -
+              store.state.platformPricing.up450 * 0.15
+          );
+        } else if ((value > 600) & (value <= 800) & isActivePeriodYearly) {
+          store.commit(
+            'updatePlatformPricing',
+            Math.round(
+              store.state.platformPricing.up600 -
+                store.state.platformPricing.up600 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.platformPricing.up600 -
+              store.state.platformPricing.up600 * 0.15
+          );
+        } else if ((value > 800) & (value <= 1000) & isActivePeriodYearly) {
+          store.commit(
+            'updatePlatformPricing',
+            Math.floor(
+              store.state.platformPricing.up800 -
+                store.state.platformPricing.up800 * 0.15
+            )
+          );
+          return Math.floor(
+            store.state.platformPricing.up800 -
+              store.state.platformPricing.up800 * 0.15
+          );
+        } else return '';
+      }),
+
+      // =============
+
+      FeedbackPricing: computed(() => {
+        const value = store.state.rangeSlider.value;
+        const isActivePeriodMonthly = store.state.isSelectedMonthly;
+        const isActivePeriodYearly = store.state.isSelectedYearly;
+
+        // wow spaghetti code ! xd
+
+        if ((value <= 30) & isActivePeriodMonthly) {
+          store.commit(
+            'updateFeedbackPricing',
+            store.state.feedbackPricing.up30
+          );
+
+          return store.state.feedbackPricing.up30;
+        } else if ((value > 30) & (value <= 50) & isActivePeriodMonthly) {
+          store.commit(
+            'updateFeedbackPricing',
+            store.state.feedbackPricing.up31
+          );
+          return store.state.feedbackPricing.up31;
+        } else if ((value > 50) & (value <= 100) & isActivePeriodMonthly) {
+          store.commit(
+            'updateFeedbackPricing',
+            store.state.feedbackPricing.up51
+          );
+          return store.state.feedbackPricing.up51;
+        } else if ((value > 100) & (value <= 200) & isActivePeriodMonthly) {
+          store.commit(
+            'updateFeedbackPricing',
+            store.state.feedbackPricing.up100
+          );
+          return store.state.feedbackPricing.up100;
+        } else if ((value > 200) & (value <= 300) & isActivePeriodMonthly) {
+          store.commit(
+            'updateFeedbackPricing',
+            store.state.feedbackPricing.up200
+          );
+          return store.state.feedbackPricing.up200;
+        } else if ((value > 300) & (value <= 450) & isActivePeriodMonthly) {
+          store.commit(
+            'updateFeedbackPricing',
+            store.state.feedbackPricing.up300
+          );
+          return store.state.feedbackPricing.up300;
+        } else if ((value > 450) & (value <= 600) & isActivePeriodMonthly) {
+          store.commit(
+            'updateFeedbackPricing',
+            store.state.feedbackPricing.up450
+          );
+          return store.state.feedbackPricing.up450;
+        } else if ((value > 600) & (value <= 800) & isActivePeriodMonthly) {
+          store.commit(
+            'updateFeedbackPricing',
+            store.state.feedbackPricing.up600
+          );
+          return store.state.feedbackPricing.up600;
+        } else if ((value > 800) & (value <= 1000) & isActivePeriodMonthly) {
+          store.commit(
+            'updateFeedbackPricing',
+            store.state.feedbackPricing.up800
+          );
+          return store.state.feedbackPricing.up800;
+        } else if ((value <= 30) & isActivePeriodYearly) {
+          store.commit(
+            'updateFeedbackPricing',
+            Math.round(
+              store.state.feedbackPricing.up30 -
+                store.state.feedbackPricing.up30 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.feedbackPricing.up30 -
+              store.state.feedbackPricing.up30 * 0.15
+          );
+        } else if ((value > 30) & (value <= 50) & isActivePeriodYearly) {
+          store.commit(
+            'updateFeedbackPricing',
+            Math.round(
+              store.state.feedbackPricing.up31 -
+                store.state.feedbackPricing.up31 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.feedbackPricing.up31 -
+              store.state.feedbackPricing.up31 * 0.15
+          );
+        } else if ((value > 50) & (value <= 100) & isActivePeriodYearly) {
+          store.commit(
+            'updateFeedbackPricing',
+            Math.round(
+              store.state.feedbackPricing.up51 -
+                store.state.feedbackPricing.up51 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.feedbackPricing.up51 -
+              store.state.feedbackPricing.up51 * 0.15
+          );
+        } else if ((value > 100) & (value <= 200) & isActivePeriodYearly) {
+          store.commit(
+            'updateFeedbackPricing',
+            Math.round(
+              store.state.feedbackPricing.up100 -
+                store.state.feedbackPricing.up100 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.feedbackPricing.up100 -
+              store.state.feedbackPricing.up100 * 0.15
+          );
+        } else if ((value > 200) & (value <= 300) & isActivePeriodYearly) {
+          store.commit(
+            'updateFeedbackPricing',
+            Math.round(
+              store.state.feedbackPricing.up200 -
+                store.state.feedbackPricing.up200 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.feedbackPricing.up200 -
+              store.state.feedbackPricing.up200 * 0.15
+          );
+        } else if ((value > 300) & (value <= 450) & isActivePeriodYearly) {
+          store.commit(
+            'updateFeedbackPricing',
+            Math.round(
+              store.state.feedbackPricing.up300 -
+                store.state.feedbackPricing.up300 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.feedbackPricing.up300 -
+              store.state.feedbackPricing.up300 * 0.15
+          );
+        } else if ((value > 450) & (value <= 600) & isActivePeriodYearly) {
+          store.commit(
+            'updateFeedbackPricing',
+            Math.round(
+              store.state.feedbackPricing.up450 -
+                store.state.feedbackPricing.up450 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.feedbackPricing.up450 -
+              store.state.feedbackPricing.up450 * 0.15
+          );
+        } else if ((value > 600) & (value <= 800) & isActivePeriodYearly) {
+          store.commit(
+            'updateFeedbackPricing',
+            Math.round(
+              store.state.feedbackPricing.up600 -
+                store.state.feedbackPricing.up600 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.feedbackPricing.up600 -
+              store.state.feedbackPricing.up600 * 0.15
+          );
+        } else if ((value > 800) & (value <= 1000) & isActivePeriodYearly) {
+          store.commit(
+            'updateFeedbackPricing',
+            Math.floor(
+              store.state.feedbackPricing.up800 -
+                store.state.feedbackPricing.up800 * 0.15
+            )
+          );
+          return Math.floor(
+            store.state.feedbackPricing.up800 -
+              store.state.feedbackPricing.up800 * 0.15
+          );
+        } else return '';
+      }),
+
+      // =============
+
+      ManagementPricing: computed(() => {
+        const value = store.state.rangeSlider.value;
+        const isActivePeriodMonthly = store.state.isSelectedMonthly;
+        const isActivePeriodYearly = store.state.isSelectedYearly;
+
+        // wow spaghetti code ! xd
+
+        if ((value <= 30) & isActivePeriodMonthly) {
+          store.commit(
+            'updateManagementPricing',
+            store.state.managementPricing.up30
+          );
+
+          return store.state.managementPricing.up30;
+        } else if ((value > 30) & (value <= 50) & isActivePeriodMonthly) {
+          store.commit(
+            'updateManagementPricing',
+            store.state.managementPricing.up31
+          );
+          return store.state.managementPricing.up31;
+        } else if ((value > 50) & (value <= 100) & isActivePeriodMonthly) {
+          store.commit(
+            'updateManagementPricing',
+            store.state.managementPricing.up51
+          );
+          return store.state.managementPricing.up51;
+        } else if ((value > 100) & (value <= 200) & isActivePeriodMonthly) {
+          store.commit(
+            'updateManagementPricing',
+            store.state.managementPricing.up100
+          );
+          return store.state.managementPricing.up100;
+        } else if ((value > 200) & (value <= 300) & isActivePeriodMonthly) {
+          store.commit(
+            'updateManagementPricing',
+            store.state.managementPricing.up200
+          );
+          return store.state.managementPricing.up200;
+        } else if ((value > 300) & (value <= 450) & isActivePeriodMonthly) {
+          store.commit(
+            'updateManagementPricing',
+            store.state.managementPricing.up300
+          );
+          return store.state.managementPricing.up300;
+        } else if ((value > 450) & (value <= 600) & isActivePeriodMonthly) {
+          store.commit(
+            'updateManagementPricing',
+            store.state.managementPricing.up450
+          );
+          return store.state.managementPricing.up450;
+        } else if ((value > 600) & (value <= 800) & isActivePeriodMonthly) {
+          store.commit(
+            'updateManagementPricing',
+            store.state.managementPricing.up600
+          );
+          return store.state.managementPricing.up600;
+        } else if ((value > 800) & (value <= 1000) & isActivePeriodMonthly) {
+          store.commit(
+            'updateManagementPricing',
+            store.state.managementPricing.up800
+          );
+          return store.state.managementPricing.up800;
+        } else if ((value <= 30) & isActivePeriodYearly) {
+          store.commit(
+            'updateManagementPricing',
+            Math.round(
+              store.state.managementPricing.up30 -
+                store.state.managementPricing.up30 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.managementPricing.up30 -
+              store.state.managementPricing.up30 * 0.15
+          );
+        } else if ((value > 30) & (value <= 50) & isActivePeriodYearly) {
+          store.commit(
+            'updateManagementPricing',
+            Math.round(
+              store.state.managementPricing.up31 -
+                store.state.managementPricing.up31 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.managementPricing.up31 -
+              store.state.managementPricing.up31 * 0.15
+          );
+        } else if ((value > 50) & (value <= 100) & isActivePeriodYearly) {
+          store.commit(
+            'updateManagementPricing',
+            Math.round(
+              store.state.managementPricing.up51 -
+                store.state.managementPricing.up51 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.managementPricing.up51 -
+              store.state.managementPricing.up51 * 0.15
+          );
+        } else if ((value > 100) & (value <= 200) & isActivePeriodYearly) {
+          store.commit(
+            'updateManagementPricing',
+            Math.round(
+              store.state.managementPricing.up100 -
+                store.state.managementPricing.up100 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.managementPricing.up100 -
+              store.state.managementPricing.up100 * 0.15
+          );
+        } else if ((value > 200) & (value <= 300) & isActivePeriodYearly) {
+          store.commit(
+            'updateManagementPricing',
+            Math.round(
+              store.state.managementPricing.up200 -
+                store.state.managementPricing.up200 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.managementPricing.up200 -
+              store.state.managementPricing.up200 * 0.15
+          );
+        } else if ((value > 300) & (value <= 450) & isActivePeriodYearly) {
+          store.commit(
+            'updateManagementPricing',
+            Math.round(
+              store.state.managementPricing.up300 -
+                store.state.managementPricing.up300 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.managementPricing.up300 -
+              store.state.managementPricing.up300 * 0.15
+          );
+        } else if ((value > 450) & (value <= 600) & isActivePeriodYearly) {
+          store.commit(
+            'updateManagementPricing',
+            Math.round(
+              store.state.managementPricing.up450 -
+                store.state.managementPricing.up450 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.managementPricing.up450 -
+              store.state.managementPricing.up450 * 0.15
+          );
+        } else if ((value > 600) & (value <= 800) & isActivePeriodYearly) {
+          store.commit(
+            'updateManagementPricing',
+            Math.round(
+              store.state.managementPricing.up600 -
+                store.state.managementPricing.up600 * 0.15
+            )
+          );
+          return Math.round(
+            store.state.managementPricing.up600 -
+              store.state.managementPricing.up600 * 0.15
+          );
+        } else if ((value > 800) & (value <= 1000) & isActivePeriodYearly) {
+          store.commit(
+            'updateManagementPricing',
+            Math.floor(
+              store.state.managementPricing.up800 -
+                store.state.managementPricing.up800 * 0.15
+            )
+          );
+          return Math.floor(
+            store.state.managementPricing.up800 -
+              store.state.managementPricing.up800 * 0.15
+          );
+        } else return '';
+      }),
+
+      // ==============
     };
   },
 };
