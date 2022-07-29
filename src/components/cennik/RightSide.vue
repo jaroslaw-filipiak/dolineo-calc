@@ -62,7 +62,7 @@
       <div class="button__payment__block">
         <ul class="button__list">
           <li
-            ref="isSelectedYearly"
+            data-value="isSelectedYearly"
             @click="handleSelectedPeriod"
             :class="{ active__payment__button: isActivePeriodYearly }"
             class="payment__button"
@@ -70,7 +70,7 @@
             Roczne (15% rabatu)
           </li>
           <li
-            ref="isSelectedMonthly"
+            data-value="isSelectedMonthly"
             @click="handleSelectedPeriod"
             :class="{ active__payment__button: isActivePeriodMonthly }"
             class="payment__button"
@@ -158,10 +158,13 @@ export default {
     return {
       ref,
       handleSelectedPeriod: (e) => {
-        const itemRef = e.target.__vnode.ref.r;
-        console.log(itemRef);
-        store.commit('updatePeriod', itemRef);
-        console.log(itemRef);
+        // const itemRef = e.target.__vnode.ref.r;
+        // console.log(itemRef);
+
+        // console.log(itemRef);
+
+        const attr = e.target.getAttribute('data-value');
+        store.commit('updatePeriod', attr);
       },
 
       CartPlatform: computed(() => {
