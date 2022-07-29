@@ -136,13 +136,102 @@
               (uwzględniono: zniżka 20% na drugi system)
             </p>
           </div>
-        </div>
-        <!-- <p class="slider__indicators">31-50 pracowników</p>
+
+          <!-- platform + ZPC /  only monthly-->
+
+          <div
+            v-if="
+              isActiveModulePlatform &
+              isActiveModuleManagement &
+              isActivePeriodMonthly
+            "
+            class="total__value"
+          >
+            {{ Math.ceil((CartPlatform + CartManagement) * 0.95) }} PLN
+            <span class="second__month__indicator">/ 1 m-с</span> <br />
+
+            <p class="extra-second-option">
+              (uwzględniono: zniżka 5% przy płatności miesięcznej)
+            </p>
+          </div>
+
+          <!-- platform + Feedback /  only monthly-->
+
+          <div
+            v-if="
+              isActiveModulePlatform &
+              isActiveModuleFeedback &
+              isActivePeriodMonthly
+            "
+            class="total__value"
+          >
+            {{ Math.ceil((CartPlatform + CartFeedback) * 0.95) }} PLN
+            <span class="second__month__indicator">/ 1 m-с</span> <br />
+
+            <p class="extra-second-option">
+              (uwzględniono: zniżka 5% przy płatności miesięcznej)
+            </p>
+          </div>
+
+          <!-- platform + ZPC /  only yearly-->
+
+          <div
+            v-if="
+              isActiveModulePlatform &
+              isActiveModuleManagement &
+              isActivePeriodYearly
+            "
+            class="total__value"
+          >
+            {{ Math.round((CartPlatform + CartManagement) * 0.95) }} PLN
+            <span class="second__month__indicator">/ 1 m-с</span> <br />
+
+            <p class="extra-second-option">(uwzględniono: zniżka 5% )</p>
+          </div>
+
+          <!-- platform + Feedback /  only yearly-->
+
+          <div
+            v-if="
+              isActiveModulePlatform &
+              isActiveModuleFeedback &
+              isActivePeriodYearly
+            "
+            class="total__value"
+          >
+            {{ Math.round((CartPlatform + CartFeedback) * 0.95) }} PLN
+            <span class="second__month__indicator">/ 1 m-с</span> <br />
+
+            <p class="extra-second-option">(uwzględniono: zniżka 5% )</p>
+          </div>
+
+          <!-- All IN -->
+
+          <div
+            v-if="
+              isActiveModulePlatform &
+              isActiveModuleFeedback &
+              isActiveModuleManagement &
+              AllModulesActive
+            "
+            class="total__value"
+            style="display: none"
+          >
+            {{ Math.round(CartPlatform + CartManagement * 1.8) }} PLN
+            <span class="second__month__indicator">/ 1 m-с</span> <br />
+
+            <p class="extra-second-option">
+              (uwzględniono: zniżka 20% na Feedback )
+            </p>
+          </div>
+
+          <!-- <p class="slider__indicators">31-50 pracowników</p>
         <p class="worker__price">17.58 PLN / 1 PRACOWNIK MIESIĘCZNIE</p> -->
+        </div>
       </div>
-    </div>
-    <div class="description__container">
-      <span class="description__holder">Ceny netto bez VAT</span>
+      <div class="description__container">
+        <span class="description__holder">Ceny netto bez VAT</span>
+      </div>
     </div>
   </div>
 </template>
@@ -177,6 +266,17 @@ export default {
 
       CartManagement: computed(() => {
         return store.state.cart.management;
+      }),
+
+      AllModulesActive: computed(() => {
+        const modulePlatform = store.state.activeModules.platform;
+        const moduleFeedback = store.state.activeModules.feedback;
+        const moduleManagement = store.state.activeModules.management;
+
+        if (modulePlatform & moduleFeedback & moduleManagement) {
+          store.commit('setAllModulesToActive', true);
+        }
+        return store.state.AllModulesActive;
       }),
 
       isActiveModulePlatform: computed(() => {

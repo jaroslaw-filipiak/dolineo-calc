@@ -25,6 +25,7 @@ const store = createStore({
         feedback: false, //Feedback360/Ocena okresowa
         management: false, //Zarządzanie przez cele
       },
+      allModulesAreActive: false,
       platformPricing: {
         up30: 673,
         up31: 879,
@@ -97,6 +98,9 @@ const store = createStore({
     },
     updateManagementPricing(state, payload) {
       state.cart.management = payload;
+    },
+    setAllModulesToActive(state, payload) {
+      state.allModulesAreActive = payload;
     },
   },
 });
