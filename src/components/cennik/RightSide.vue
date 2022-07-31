@@ -1,6 +1,6 @@
 <template>
   <div class="rower">
-    <div class="main__window">
+    <div v-if="!moreThanThousand" class="main__window">
       <div
         v-if="
           isActiveModulePlatform ||
@@ -379,6 +379,37 @@
         <span class="description__holder">Ceny netto bez VAT</span>
       </div>
     </div>
+
+    <div v-if="moreThanThousand" class="main__window">
+      <div class="picked__modules">
+        <h1 style="margin-bottom: 20px !important" class="top__caption">
+          Jeśli poszukujesz platformy
+        </h1>
+        <h1
+          class="morethanneed__caption"
+          style="max-width: 90%; text-align: center"
+        >
+          dla więcej niż <strong>1000 pracowników</strong> lub jesteś
+          zainteresowany dedykowanymi rozwiązaniami dla swojej organizacji –
+          <strong>napisz do nas w celu otrzymania indywidualnej oferty!</strong>
+        </h1>
+        <div
+          style="
+            height: 1px;
+            background-color: #cfd6dd;
+            width: 100%;
+            margin-top: 30px;
+          "
+        ></div>
+        <a
+          href="https://dolineo.com/kontakt/"
+          target="_blank"
+          rel="noreferrer"
+          class="admin__button"
+          >SKONTAKTUJ SIĘ</a
+        >
+      </div>
+    </div>
   </div>
 </template>
 
@@ -396,6 +427,12 @@ export default {
 
         store.commit('updatePeriod', attr);
       },
+
+      moreThanThousand: computed(() => {
+        const value = store.state.rangeSlider.value;
+
+        return value > 1000 ? true : false;
+      }),
 
       numberOfEmployees: computed(() => {
         const value = store.state.rangeSlider.value;
