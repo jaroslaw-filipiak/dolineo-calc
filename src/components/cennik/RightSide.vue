@@ -21,7 +21,9 @@
             </div>
             <div class="price__final__holder">
               <span> + </span
-              ><span class="price__by__module">{{ PlatformPricing }}</span
+              ><span class="price__by__module">{{
+                PlatformPricing.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+              }}</span
               ><span>
                 PLN
                 <span class="first__month__indicator"> / 1 m-с </span>
@@ -39,7 +41,9 @@
             </div>
             <div class="price__final__holder">
               <span> + </span
-              ><span class="price__by__module">{{ FeedbackPricing }}</span
+              ><span class="price__by__module">{{
+                FeedbackPricing.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+              }}</span
               ><span>
                 PLN
                 <span class="first__month__indicator"> / 1 m-с </span>
@@ -57,7 +61,12 @@
             </div>
             <div class="price__final__holder">
               <span> + </span
-              ><span class="price__by__module">{{ ManagementPricing }}</span
+              ><span class="price__by__module">{{
+                ManagementPricing.toString().replace(
+                  /\B(?=(\d{3})+(?!\d))/g,
+                  ' '
+                )
+              }}</span
               ><span>
                 PLN <span class="first__month__indicator">/ 1 m-с</span>
               </span>
@@ -101,7 +110,10 @@
             "
             class="total__value"
           >
-            {{ CartPlatform }} PLN
+            {{
+              CartPlatform.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+            }}
+            PLN
             <span class="second__month__indicator">/ 1 m-с</span>
           </div>
 
@@ -116,7 +128,10 @@
             "
             class="total__value"
           >
-            {{ CartFeedback }} PLN
+            {{
+              CartFeedback.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+            }}
+            PLN
             <span class="second__month__indicator">/ 1 m-с</span>
           </div>
 
@@ -131,7 +146,10 @@
             "
             class="total__value"
           >
-            {{ CartManagement }} PLN
+            {{
+              CartManagement.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+            }}
+            PLN
             <span class="second__month__indicator">/ 1 m-с</span>
           </div>
 
@@ -145,8 +163,12 @@
             "
             class="total__value"
           >
-            {{ Math.round(CartManagement * 1.8) }} PLN
-            <span class="second__month__indicator">/ 1 m-с</span> <br />
+            {{
+              Math.round(CartManagement * 1.8)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+            }}
+            PLN <span class="second__month__indicator">/ 1 m-с</span> <br />
 
             <p class="extra-second-option">
               (uwzględniono: zniżka 20% na drugi system)
@@ -164,8 +186,12 @@
             "
             class="total__value"
           >
-            {{ Math.ceil((CartPlatform + CartManagement) * 0.95) }} PLN
-            <span class="second__month__indicator">/ 1 m-с</span> <br />
+            {{
+              Math.ceil((CartPlatform + CartManagement) * 0.95)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+            }}
+            PLN <span class="second__month__indicator">/ 1 m-с</span> <br />
 
             <p class="extra-second-option">
               (uwzględniono: zniżka 5% przy płatności miesięcznej)
@@ -183,8 +209,12 @@
             "
             class="total__value"
           >
-            {{ Math.ceil((CartPlatform + CartFeedback) * 0.95) }} PLN
-            <span class="second__month__indicator">/ 1 m-с</span> <br />
+            {{
+              Math.ceil((CartPlatform + CartFeedback) * 0.95)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+            }}
+            PLN <span class="second__month__indicator">/ 1 m-с</span> <br />
 
             <p class="extra-second-option">
               (uwzględniono: zniżka 5% przy płatności miesięcznej)
@@ -202,8 +232,12 @@
             "
             class="total__value"
           >
-            {{ Math.round((CartPlatform + CartManagement) * 0.95) }} PLN
-            <span class="second__month__indicator">/ 1 m-с</span> <br />
+            {{
+              Math.round((CartPlatform + CartManagement) * 0.95)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+            }}
+            PLN <span class="second__month__indicator">/ 1 m-с</span> <br />
 
             <p class="extra-second-option">(uwzględniono: zniżka 5% )</p>
           </div>
@@ -219,8 +253,12 @@
             "
             class="total__value"
           >
-            {{ Math.round((CartPlatform + CartFeedback) * 0.95) }} PLN
-            <span class="second__month__indicator">/ 1 m-с</span> <br />
+            {{
+              Math.round((CartPlatform + CartFeedback) * 0.95)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+            }}
+            PLN <span class="second__month__indicator">/ 1 m-с</span> <br />
 
             <p class="extra-second-option">(uwzględniono: zniżka 5% )</p>
           </div>
@@ -236,8 +274,12 @@
             "
             class="total__value"
           >
-            {{ Math.ceil(CartPlatform + CartFeedback * 1.8) }} PLN
-            <span class="second__month__indicator">/ 1 m-с</span> <br />
+            {{
+              Math.ceil(CartPlatform + CartFeedback * 1.8)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+            }}
+            PLN <span class="second__month__indicator">/ 1 m-с</span> <br />
 
             <p class="extra-second-option">
               (uwzględniono: zniżka 20% na Feedback )
