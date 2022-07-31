@@ -1,8 +1,17 @@
 <template>
   <div class="rower">
     <div class="main__window">
-      <div class="picked__modules">
-        <h1 class="top__caption">Wybrane moduły</h1>
+      <div
+        v-if="
+          isActiveModulePlatform ||
+          isActiveModuleFeedback ||
+          isActiveModuleManagement
+        "
+        class="picked__modules"
+      >
+        <h1 class="top__caption">
+          Wybrane moduły {{ isAtLeastOneModuleActive }}
+        </h1>
         <div class="analiza__item">
           <!-- Platforma z katalogiem szkoleń -->
 
@@ -247,6 +256,7 @@
 </template>
 
 <script>
+import { objectExpression } from '@babel/types';
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 
@@ -257,6 +267,7 @@ export default {
     return {
       handleSelectedPeriod: (e) => {
         const attr = e.target.getAttribute('data-value');
+
         store.commit('updatePeriod', attr);
       },
 
@@ -933,7 +944,7 @@ export default {
   max-height: 100%;
   width: 100%;
   gap: 0px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -967,6 +978,7 @@ export default {
   margin: auto;
   padding-bottom: 16px;
   border-bottom: 1px solid #cfd6dd;
+  margin-top: 5px;
 }
 
 .button__list {
@@ -984,6 +996,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
   }
 }
 
@@ -991,7 +1004,7 @@ export default {
   font-family: 'Source Sans Pro';
   width: 100%;
   height: 46px;
-  line-height: 47px;
+  line-height: 46px;
   font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
@@ -1007,12 +1020,12 @@ export default {
   font-family: 'Source Sans Pro';
   font-size: 13px;
   width: 100%;
-  height: 45px;
-  line-height: 45px;
+  height: 46px;
+  line-height: 46px;
   font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
-  border-radius: 11px;
+  border-radius: 6px;
   border-style: solid;
   border-width: thin;
   border-color: #f59300;
@@ -1261,7 +1274,7 @@ export default {
   .picked__modules {
     max-height: 100%;
     max-width: 100%;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     gap: 0px;
   }
 
@@ -1318,13 +1331,13 @@ export default {
   .payment__button {
     font-family: 'Source Sans Pro';
     font-size: 17px;
-    line-height: 45px;
+    line-height: 46px;
     width: 100%;
-    height: 45px;
+    height: 46px;
     font-weight: normal;
     font-style: normal;
     text-transform: uppercase;
-    border-radius: 8px;
+    border-radius: 6px;
     border-style: solid;
     border-width: 1px;
     border-color: #f59300;
