@@ -93,14 +93,14 @@
             :class="{ active__payment__button: isActivePeriodMonthly }"
             class="payment__button"
           >
-            Miesięcznie
+            Miesięczne
           </li>
         </ul>
       </div>
 
       <div class="bottom_elements">
         <div class="price__holder">
-          <!-- only platform -->
+          <!-- only platform ✔️ -->
           <div
             v-if="
               isActiveModulePlatform &
@@ -110,14 +110,19 @@
             "
             class="total__value"
           >
-            {{
-              CartPlatform.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
-            }}
+            {{ CartPlatform.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') }}
             PLN
             <span class="second__month__indicator">/ 1 m-с</span>
+
+            <p class="slider__indicators">{{ employeValue }} pracowników</p>
+            <p class="worker__price">
+              {{ (Math.ceil(CartPlatform) / numberOfEmployees).toFixed(2) }}
+
+              PLN / 1 PRACOWNIK MIESIĘCZNIE
+            </p>
           </div>
 
-          <!--  only feedback-->
+          <!--  only feedback ✔️ -->
 
           <div
             v-if="
@@ -128,14 +133,19 @@
             "
             class="total__value"
           >
-            {{
-              CartFeedback.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
-            }}
+            {{ CartFeedback.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') }}
             PLN
             <span class="second__month__indicator">/ 1 m-с</span>
+
+            <p class="slider__indicators">{{ employeValue }} pracowników</p>
+            <p class="worker__price">
+              {{ (Math.ceil(CartFeedback) / numberOfEmployees).toFixed(2) }}
+
+              PLN / 1 PRACOWNIK MIESIĘCZNIE
+            </p>
           </div>
 
-          <!-- only management -->
+          <!-- only management  ✔️-->
 
           <div
             v-if="
@@ -151,9 +161,16 @@
             }}
             PLN
             <span class="second__month__indicator">/ 1 m-с</span>
+
+            <p class="slider__indicators">{{ employeValue }} pracowników</p>
+            <p class="worker__price">
+              {{ (Math.ceil(CartManagement) / numberOfEmployees).toFixed(2) }}
+
+              PLN / 1 PRACOWNIK MIESIĘCZNIE
+            </p>
           </div>
 
-          <!-- feedback + management -->
+          <!-- feedback + management ✔️ -->
 
           <div
             v-if="
@@ -171,11 +188,20 @@
             PLN <span class="second__month__indicator">/ 1 m-с</span> <br />
 
             <p class="extra-second-option">
-              (uwzględniono: zniżka 20% na drugi system)
+              (uwzględniono: <strong>zniżka 20%</strong> na drugi system)
+            </p>
+
+            <p class="slider__indicators">{{ employeValue }} pracowników</p>
+            <p class="worker__price">
+              {{
+                (Math.ceil(CartManagement * 1.8) / numberOfEmployees).toFixed(2)
+              }}
+
+              PLN / 1 PRACOWNIK MIESIĘCZNIE
             </p>
           </div>
 
-          <!-- platform + ZPC /  only monthly-->
+          <!-- platform + ZPC /  only monthly ✔️ -->
 
           <div
             v-if="
@@ -194,11 +220,24 @@
             PLN <span class="second__month__indicator">/ 1 m-с</span> <br />
 
             <p class="extra-second-option">
-              (uwzględniono: zniżka 5% przy płatności miesięcznej)
+              (uwzględniono: <strong>zniżka 5%</strong> przy płatności
+              miesięcznej)
+            </p>
+
+            <p class="slider__indicators">{{ employeValue }} pracowników</p>
+            <p class="worker__price">
+              {{
+                (
+                  (Math.ceil(CartPlatform + CartManagement) * 0.95) /
+                  numberOfEmployees
+                ).toFixed(2)
+              }}
+
+              PLN / 1 PRACOWNIK MIESIĘCZNIE
             </p>
           </div>
 
-          <!-- platform + Feedback /  only monthly-->
+          <!-- platform + Feedback /  only monthly ✔️ -->
 
           <div
             v-if="
@@ -217,11 +256,23 @@
             PLN <span class="second__month__indicator">/ 1 m-с</span> <br />
 
             <p class="extra-second-option">
-              (uwzględniono: zniżka 5% przy płatności miesięcznej)
+              (uwzględniono: <strong>zniżka 5%</strong> przy płatności
+              miesięcznej)
+            </p>
+            <p class="slider__indicators">{{ employeValue }} pracowników</p>
+            <p class="worker__price">
+              {{
+                (
+                  Math.ceil((CartPlatform + CartFeedback) * 0.95) /
+                  numberOfEmployees
+                ).toFixed(2)
+              }}
+
+              PLN / 1 PRACOWNIK MIESIĘCZNIE
             </p>
           </div>
 
-          <!-- platform + ZPC /  only yearly-->
+          <!-- platform + ZPC /  only yearly ✔️ -->
 
           <div
             v-if="
@@ -239,10 +290,23 @@
             }}
             PLN <span class="second__month__indicator">/ 1 m-с</span> <br />
 
-            <p class="extra-second-option">(uwzględniono: zniżka 5% )</p>
+            <p class="extra-second-option">
+              (uwzględniono: <strong>zniżka 5%</strong> )
+            </p>
+            <p class="slider__indicators">{{ employeValue }} pracowników</p>
+            <p class="worker__price">
+              {{
+                (
+                  (Math.ceil(CartPlatform + CartManagement) * 0.95) /
+                  numberOfEmployees
+                ).toFixed(2)
+              }}
+
+              PLN / 1 PRACOWNIK MIESIĘCZNIE
+            </p>
           </div>
 
-          <!-- platform + Feedback /  only yearly-->
+          <!-- platform + Feedback /  only yearly ✔️ -->
 
           <div
             v-if="
@@ -260,10 +324,23 @@
             }}
             PLN <span class="second__month__indicator">/ 1 m-с</span> <br />
 
-            <p class="extra-second-option">(uwzględniono: zniżka 5% )</p>
+            <p class="extra-second-option">
+              (uwzględniono: <strong>zniżka 5%</strong> )
+            </p>
+            <p class="slider__indicators">{{ employeValue }} pracowników</p>
+            <p class="worker__price">
+              {{
+                (
+                  Math.round((CartPlatform + CartFeedback) * 0.95) /
+                  numberOfEmployees
+                ).toFixed(2)
+              }}
+
+              PLN / 1 PRACOWNIK MIESIĘCZNIE
+            </p>
           </div>
 
-          <!-- All IN -->
+          <!-- All IN ✔️ -->
 
           <div
             v-if="
@@ -282,12 +359,20 @@
             PLN <span class="second__month__indicator">/ 1 m-с</span> <br />
 
             <p class="extra-second-option">
-              (uwzględniono: zniżka 20% na Feedback )
+              (uwzględniono: <strong>zniżka 20%</strong> na drugi system)
+            </p>
+            <p class="slider__indicators">{{ employeValue }} pracowników</p>
+            <p class="worker__price">
+              {{
+                (
+                  Math.ceil(CartPlatform + CartFeedback * 1.8) /
+                  numberOfEmployees
+                ).toFixed(2)
+              }}
+
+              PLN / 1 PRACOWNIK MIESIĘCZNIE
             </p>
           </div>
-
-          <!-- <p class="slider__indicators">31-50 pracowników</p>
-        <p class="worker__price">17.58 PLN / 1 PRACOWNIK MIESIĘCZNIE</p> -->
         </div>
       </div>
       <div class="description__container">
@@ -298,7 +383,6 @@
 </template>
 
 <script>
-import { objectExpression } from '@babel/types';
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 
@@ -312,6 +396,29 @@ export default {
 
         store.commit('updatePeriod', attr);
       },
+
+      numberOfEmployees: computed(() => {
+        const value = store.state.rangeSlider.value;
+        if (value <= 30) {
+          return 30;
+        } else if ((value > 30) & (value <= 50)) {
+          return 50;
+        } else if ((value > 50) & (value <= 100)) {
+          return 100;
+        } else if ((value > 100) & (value <= 200)) {
+          return 200;
+        } else if ((value > 200) & (value <= 300)) {
+          return 300;
+        } else if ((value > 300) & (value <= 450)) {
+          return 450;
+        } else if ((value > 450) & (value <= 600)) {
+          return 600;
+        } else if ((value > 600) & (value <= 800)) {
+          return 800;
+        } else if ((value > 800) & (value <= 1000)) {
+          return 1000;
+        } else return 1001;
+      }),
 
       CartPlatform: computed(() => {
         return store.state.cart.platform;
@@ -872,6 +979,53 @@ export default {
       }),
 
       // ==============
+
+      employeValue: computed(() => {
+        if (store.state.rangeSlider.value <= 30) return '1-30';
+        else if (
+          (store.state.rangeSlider.value > 30) &
+          (store.state.rangeSlider.value <= 50)
+        ) {
+          return '31 - 50';
+        } else if (
+          (store.state.rangeSlider.value > 50) &
+          (store.state.rangeSlider.value <= 100)
+        ) {
+          return '51 - 100';
+        } else if (
+          (store.state.rangeSlider.value > 100) &
+          (store.state.rangeSlider.value <= 200)
+        ) {
+          return '101 - 200';
+        } else if (
+          (store.state.rangeSlider.value > 200) &
+          (store.state.rangeSlider.value <= 300)
+        ) {
+          return '201 - 300';
+        } else if (
+          (store.state.rangeSlider.value > 300) &
+          (store.state.rangeSlider.value <= 450)
+        ) {
+          return '301 - 450';
+        } else if (
+          (store.state.rangeSlider.value > 450) &
+          (store.state.rangeSlider.value <= 600)
+        ) {
+          return '451 - 600';
+        } else if (
+          (store.state.rangeSlider.value > 600) &
+          (store.state.rangeSlider.value <= 800)
+        ) {
+          return '601 - 800';
+        } else if (
+          (store.state.rangeSlider.value > 800) &
+          (store.state.rangeSlider.value <= 999)
+        ) {
+          return '801 - 1000';
+        } else if (store.state.rangeSlider.value == 1000) {
+          return '1000';
+        } else return '1000+';
+      }),
     };
   },
 };
@@ -1549,5 +1703,8 @@ export default {
   font-size: 15px;
   font-weight: 400;
   text-align: center;
+  margin: 0;
+  font-weight: 400;
+  font-family: 'Proxima Nova', sans-serif;
 }
 </style>
