@@ -1,5 +1,5 @@
 <template>
-  <div class="rower">
+  <div class="rower" id="dolineo-right-side">
     <div v-if="!moreThanThousand" class="main__window">
       <div
         v-if="
@@ -75,7 +75,7 @@
         </div>
       </div>
 
-      <h1 class="lower__caption">Rozliczenie</h1>
+      <h1 id="calculate__wp-fix" class="lower__caption">Rozliczenie</h1>
 
       <div class="button__payment__block">
         <ul class="button__list">
@@ -98,7 +98,7 @@
         </ul>
       </div>
 
-      <div class="bottom_elements">
+      <div id="bottom_elements__wp-fix" class="bottom_elements">
         <div class="price__holder">
           <!-- only platform ✔️ -->
           <div
@@ -380,7 +380,17 @@
       </div>
     </div>
 
-    <div v-if="moreThanThousand" class="main__window">
+    <div
+      v-if="moreThanThousand"
+      class="main__window"
+      style="
+        min-height: 489px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+      "
+    >
       <div class="picked__modules">
         <h1 style="margin-bottom: 20px !important" class="top__caption">
           Jeśli poszukujesz platformy
@@ -405,7 +415,7 @@
           href="https://dolineo.com/kontakt/"
           target="_blank"
           rel="noreferrer"
-          class="admin__button"
+          class="cta-btn"
           >SKONTAKTUJ SIĘ</a
         >
       </div>
@@ -1069,6 +1079,32 @@ export default {
 </script>
 
 <style lang="scss">
+#dolineo-right-side {
+  .cta-btn {
+    margin-top: 20px;
+    min-width: 280px;
+    font-size: 17px !important;
+    line-height: 46px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Source Sans Pro';
+    height: 46px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-style: solid;
+    border-width: thin;
+    border-radius: 11px;
+    background-color: #f59300 !important;
+    color: rgb(255, 255, 255) !important;
+    cursor: pointer;
+    &:hover {
+      background-color: #f59300;
+      color: #fff;
+    }
+  }
+}
+
 /* we will explain what these classes do next! */
 .v-enter-active,
 .v-leave-active {
@@ -1300,7 +1336,7 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 240px;
+  width: 100%;
   padding: 0.4em 1em;
   background-color: #9fdad0;
   border: 2px solid #3fb5a1;
@@ -1333,6 +1369,7 @@ export default {
 }
 
 .admin__button {
+  text-decoration: none !important;
   margin: auto;
   margin-top: 35px;
   margin-bottom: 35px;
@@ -1344,13 +1381,13 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 15px;
-  width: 200px;
-  height: 20px;
+  padding: 15px !important;
+  width: 200px !important;
+  height: 20px !important;
   background-color: #f59300;
   box-shadow: #f59300;
   border-radius: 12px;
-  color: #fff;
+  color: #fff !important;
   text-decoration: none;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -1656,13 +1693,13 @@ export default {
     justify-content: center;
     align-items: center;
     padding: 15px;
-    width: 278px;
-    height: 24px;
+    width: 278px !important;
+    height: 24px !important;
     background-color: #f59300;
     box-shadow: #f59300;
     border-radius: 12px;
-    color: #fff;
-    text-decoration: none;
+    color: #fff !important;
+    text-decoration: none !important;
     transition: all 0.3s ease;
     cursor: pointer;
     border: 2px solid #f59300;

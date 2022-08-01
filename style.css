@@ -1,0 +1,13 @@
+/* special styles only for WP instance */
+
+#dolineo-range-slider--subtitle__wp-fix {
+  margin-top: 60px !important;
+}
+
+#bottom_elements__wp-fix {
+  margin-top: 20px !important;
+}
+
+#calculate__wp-fix {
+  margin-bottom: 15px !important;
+}
