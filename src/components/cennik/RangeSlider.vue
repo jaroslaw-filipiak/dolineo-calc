@@ -1,6 +1,8 @@
 <template>
   <div class="dolineo-range-slider">
-    <div class="dolineo-range-slider--title">Cennik abonamentów rocznych</div>
+    <div class="dolineo-range-slider--title">
+      Cennik abonamentów rocznych {{ location }}
+    </div>
     <div class="slider-wrapper">
       <div class="slider--min">1</div>
 
@@ -16,7 +18,10 @@
       <div class="slider--max">1000</div>
     </div>
 
-    <div class="dolineo-range-slider--subtitle">
+    <div
+      id="dolineo-range-slider--subtitle__wp-fix"
+      class="dolineo-range-slider--subtitle"
+    >
       Liczba pracowników: {{ employeValue }} osób
     </div>
   </div>
@@ -24,7 +29,7 @@
 
 <script>
 import Slider from '@vueform/slider';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 
 export default {
