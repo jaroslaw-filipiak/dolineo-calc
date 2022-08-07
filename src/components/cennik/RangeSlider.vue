@@ -1,8 +1,6 @@
 <template>
   <div class="dolineo-range-slider">
-    <div class="dolineo-range-slider--title">
-      Cennik abonamentów rocznych {{ location }}
-    </div>
+    <div class="dolineo-range-slider--title">Cennik abonamentów rocznych</div>
     <div class="slider-wrapper">
       <div class="slider--min">1</div>
 
@@ -15,7 +13,7 @@
           :tooltips="tooltips"
         />
       </div>
-      <div class="slider--max">1000</div>
+      <div class="slider--max">1 000</div>
     </div>
 
     <div
@@ -90,10 +88,10 @@ export default {
           (store.state.rangeSlider.value > 800) &
           (store.state.rangeSlider.value <= 999)
         ) {
-          return '801 - 1000';
+          return '801 - 1 000';
         } else if (store.state.rangeSlider.value == 1000) {
-          return '1000';
-        } else return '1000+';
+          return '1 000';
+        } else return '1 000+';
       }),
     };
   },

@@ -26,7 +26,9 @@ const store = createStore({
         feedback: false, //Feedback360/Ocena okresowa
         management: false, //Zarządzanie przez cele
       },
-
+      activeModulesLength: {
+        value: 2,
+      },
       platformPricing: {
         up30: 673,
         up31: 879,
@@ -63,11 +65,14 @@ const store = createStore({
         up800: 2742,
       },
 
-      isSelectedMonthly: true,
-      isSelectedYearly: false,
+      isSelectedMonthly: false,
+      isSelectedYearly: true,
     };
   },
   mutations: {
+    updateActiveModuleLength(state, payload) {
+      state.activeModulesLength.value = payload;
+    },
     updateRangeSlider(state, payload) {
       state.rangeSlider.value = payload;
     },

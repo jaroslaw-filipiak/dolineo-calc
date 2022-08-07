@@ -9,10 +9,11 @@
         "
         class="picked__modules"
       >
-        <h1 class="top__caption">
-          Wybrane moduły {{ isAtLeastOneModuleActive }}
-        </h1>
-        <div class="analiza__item">
+        <h1 class="top__caption">Wybrane moduły</h1>
+        <div
+          class="analiza__item"
+          :class="{ 'analiza__item--active': isActiveModulePlatform }"
+        >
           <!-- Platforma z katalogiem szkoleń -->
 
           <div v-show="isActiveModulePlatform" class="item__holder__option">
@@ -34,7 +35,11 @@
 
         <!-- Feedback360/Ocena okresowa -->
 
-        <div v-show="isActiveModuleFeedback" class="analiza__item">
+        <div
+          v-show="isActiveModuleFeedback"
+          class="analiza__item"
+          :class="{ 'analiza__item--active': isActiveModuleFeedback }"
+        >
           <div class="item__holder__option">
             <div class="cart__header__div">
               <h1 class="cart__header">Feedback360/Ocena okresowa</h1>
@@ -54,7 +59,11 @@
 
         <!-- Zarządzanie przez cele -->
 
-        <div v-show="isActiveModuleManagement" class="analiza__item">
+        <div
+          v-show="isActiveModuleManagement"
+          class="analiza__item"
+          :class="{ 'analiza__item--active': isActiveModuleManagement }"
+        >
           <div class="item__holder__option">
             <div class="cart__header__div">
               <h1 class="cart__header">Zarządzanie przez cele</h1>
@@ -70,6 +79,35 @@
               ><span>
                 PLN <span class="first__month__indicator">/ 1 m-с</span>
               </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cena razem -->
+
+        <div
+          v-show="
+            (isActiveModuleFeedback && isActiveModulePlatform) ||
+            (isActiveModulePlatform && isActiveModuleManagement) ||
+            (isActiveModuleManagement && isActiveModuleFeedback) ||
+            (isActiveModuleFeedback &&
+              isActiveModulePlatform &&
+              isActiveModuleManagement)
+          "
+          class="analiza__item"
+        >
+          <div class="item__holder__option">
+            <div class="cart__header__div">
+              <h1 class="cart__header">Cena razem</h1>
+            </div>
+            <div class="price__final__holder">
+              <span> + </span
+              ><span class="price__by__module"
+                >{{
+                  priceBefore.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+                }}
+                PLN / 1 m-с</span
+              >
             </div>
           </div>
         </div>
@@ -116,9 +154,9 @@
 
             <p class="slider__indicators">{{ employeValue }} pracowników</p>
             <p class="worker__price">
-              {{ (Math.ceil(CartPlatform) / numberOfEmployees).toFixed(2) }}
+              {{ (Math.ceil(CartPlatform) / numberOfEmployees).toFixed(0) }}
 
-              PLN / 1 PRACOWNIK MIESIĘCZNIE
+              PLN za pracownika/m-c
             </p>
           </div>
 
@@ -139,9 +177,9 @@
 
             <p class="slider__indicators">{{ employeValue }} pracowników</p>
             <p class="worker__price">
-              {{ (Math.ceil(CartFeedback) / numberOfEmployees).toFixed(2) }}
+              {{ (Math.ceil(CartFeedback) / numberOfEmployees).toFixed(0) }}
 
-              PLN / 1 PRACOWNIK MIESIĘCZNIE
+              PLN za pracownika/m-c
             </p>
           </div>
 
@@ -164,9 +202,9 @@
 
             <p class="slider__indicators">{{ employeValue }} pracowników</p>
             <p class="worker__price">
-              {{ (Math.ceil(CartManagement) / numberOfEmployees).toFixed(2) }}
+              {{ (Math.ceil(CartManagement) / numberOfEmployees).toFixed(0) }}
 
-              PLN / 1 PRACOWNIK MIESIĘCZNIE
+              PLN za pracownika/m-c
             </p>
           </div>
 
@@ -188,16 +226,16 @@
             PLN <span class="second__month__indicator">/ 1 m-с</span> <br />
 
             <p class="extra-second-option">
-              (uwzględniono: <strong>zniżka 20%</strong> na drugi system)
+              (uwzględniono: <strong>zniżka 20%</strong> na moduł ZPC)
             </p>
 
             <p class="slider__indicators">{{ employeValue }} pracowników</p>
             <p class="worker__price">
               {{
-                (Math.ceil(CartManagement * 1.8) / numberOfEmployees).toFixed(2)
+                (Math.ceil(CartManagement * 1.8) / numberOfEmployees).toFixed(0)
               }}
 
-              PLN / 1 PRACOWNIK MIESIĘCZNIE
+              PLN za pracownika/m-c
             </p>
           </div>
 
@@ -220,8 +258,7 @@
             PLN <span class="second__month__indicator">/ 1 m-с</span> <br />
 
             <p class="extra-second-option">
-              (uwzględniono: <strong>zniżka 5%</strong> przy płatności
-              miesięcznej)
+              (uwzględniono: <strong>zniżka 5%</strong>)
             </p>
 
             <p class="slider__indicators">{{ employeValue }} pracowników</p>
@@ -230,10 +267,10 @@
                 (
                   (Math.ceil(CartPlatform + CartManagement) * 0.95) /
                   numberOfEmployees
-                ).toFixed(2)
+                ).toFixed(0)
               }}
 
-              PLN / 1 PRACOWNIK MIESIĘCZNIE
+              PLN za pracownika/m-c
             </p>
           </div>
 
@@ -256,8 +293,7 @@
             PLN <span class="second__month__indicator">/ 1 m-с</span> <br />
 
             <p class="extra-second-option">
-              (uwzględniono: <strong>zniżka 5%</strong> przy płatności
-              miesięcznej)
+              (uwzględniono: <strong>zniżka 5%</strong>)
             </p>
             <p class="slider__indicators">{{ employeValue }} pracowników</p>
             <p class="worker__price">
@@ -265,10 +301,10 @@
                 (
                   Math.ceil((CartPlatform + CartFeedback) * 0.95) /
                   numberOfEmployees
-                ).toFixed(2)
+                ).toFixed(0)
               }}
 
-              PLN / 1 PRACOWNIK MIESIĘCZNIE
+              PLN za pracownika/m-c
             </p>
           </div>
 
@@ -291,7 +327,7 @@
             PLN <span class="second__month__indicator">/ 1 m-с</span> <br />
 
             <p class="extra-second-option">
-              (uwzględniono: <strong>zniżka 5%</strong> )
+              (uwzględniono: <strong>zniżka 5%</strong>)
             </p>
             <p class="slider__indicators">{{ employeValue }} pracowników</p>
             <p class="worker__price">
@@ -299,10 +335,10 @@
                 (
                   (Math.ceil(CartPlatform + CartManagement) * 0.95) /
                   numberOfEmployees
-                ).toFixed(2)
+                ).toFixed(0)
               }}
 
-              PLN / 1 PRACOWNIK MIESIĘCZNIE
+              PLN za pracownika/m-c
             </p>
           </div>
 
@@ -325,7 +361,7 @@
             PLN <span class="second__month__indicator">/ 1 m-с</span> <br />
 
             <p class="extra-second-option">
-              (uwzględniono: <strong>zniżka 5%</strong> )
+              (uwzględniono: <strong>zniżka 5%</strong>)
             </p>
             <p class="slider__indicators">{{ employeValue }} pracowników</p>
             <p class="worker__price">
@@ -333,10 +369,10 @@
                 (
                   Math.round((CartPlatform + CartFeedback) * 0.95) /
                   numberOfEmployees
-                ).toFixed(2)
+                ).toFixed(0)
               }}
 
-              PLN / 1 PRACOWNIK MIESIĘCZNIE
+              PLN za pracownika/m-c
             </p>
           </div>
 
@@ -359,7 +395,7 @@
             PLN <span class="second__month__indicator">/ 1 m-с</span> <br />
 
             <p class="extra-second-option">
-              (uwzględniono: <strong>zniżka 20%</strong> na drugi system)
+              (uwzględniono: <strong>zniżka 20%</strong> na moduł ZPC)
             </p>
             <p class="slider__indicators">{{ employeValue }} pracowników</p>
             <p class="worker__price">
@@ -367,10 +403,10 @@
                 (
                   Math.ceil(CartPlatform + CartFeedback * 1.8) /
                   numberOfEmployees
-                ).toFixed(2)
+                ).toFixed(0)
               }}
 
-              PLN / 1 PRACOWNIK MIESIĘCZNIE
+              PLN za pracownika/m-c
             </p>
           </div>
         </div>
@@ -392,16 +428,20 @@
       "
     >
       <div class="picked__modules">
-        <h1 style="margin-bottom: 20px !important" class="top__caption">
-          Jeśli poszukujesz platformy
+        <h1
+          style="margin-bottom: 20px !important; font-size: 26px"
+          class="top__caption"
+        >
+          Rozwiązania szyte na miarę
         </h1>
         <h1
           class="morethanneed__caption"
-          style="max-width: 90%; text-align: center"
+          style="max-width: 90%; text-align: center; font-size: 15px"
         >
-          dla więcej niż <strong>1000 pracowników</strong> lub jesteś
-          zainteresowany dedykowanymi rozwiązaniami dla swojej organizacji –
-          <strong>napisz do nas w celu otrzymania indywidualnej oferty!</strong>
+          Jeśli poszukujesz platformy dla
+          <strong>więcej iż 1000 pracowników</strong> lub jesteś zainteresowany
+          <strong>dedykowanymi rozwiązaniami</strong> dla swojej organizacji –
+          napisz do nas w celu otrzymania indywidualnej oferty!
         </h1>
         <div
           style="
@@ -424,7 +464,7 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 
 export default {
@@ -437,6 +477,28 @@ export default {
 
         store.commit('updatePeriod', attr);
       },
+
+      activeModulesLength: computed(() => {
+        return store.state.activeModulesLength.value;
+      }),
+
+      priceBefore: computed(() => {
+        // values
+        const platform = store.state.cart.platform;
+        const feedback = store.state.cart.feedback;
+        const management = store.state.cart.management;
+        // active state / true false
+
+        const platformActive = store.state.activeModules.platform;
+        const feedbackActive = store.state.activeModules.feedback;
+        const managementActive = store.state.activeModules.management;
+
+        return (
+          (platformActive ? platform : 0) +
+          (feedbackActive ? feedback : 0) +
+          (managementActive ? management : 0)
+        );
+      }),
 
       moreThanThousand: computed(() => {
         const value = store.state.rangeSlider.value;
@@ -1303,7 +1365,7 @@ export default {
   cursor: pointer;
   transition: 0.1s;
   &:hover {
-    background-color: #f59300;
+    background-color: #f7a933;
     color: #fff;
   }
 }
@@ -1340,13 +1402,12 @@ export default {
   padding: 0.4em 1em;
   background-color: #9fdad0;
   border: 2px solid #3fb5a1;
-  border-radius: 12px;
-  border-radius: 12px;
+  border-radius: 6px;
   color: rgb(20, 20, 20);
   font-size: 12px;
   font-weight: 700;
   line-height: 14px;
-  text-transform: uppercase;
+
   text-align: center;
   margin-bottom: 20px;
 }
@@ -1596,6 +1657,10 @@ export default {
     background-color: #f59300;
     color: rgb(255, 255, 255);
     cursor: pointer;
+
+    &:hover {
+      background-color: #f7a933 !important;
+    }
   }
 
   .payment__button {
@@ -1653,12 +1718,12 @@ export default {
     padding: 0.4em 1em;
     background-color: #9fdad0;
     border: 2px solid #3fb5a1;
-    border-radius: 12px;
+    border-radius: 6px;
     color: rgb(20, 20, 20);
     font-size: 12px;
     font-weight: 700;
     line-height: 14px;
-    text-transform: uppercase;
+
     text-align: center;
     margin-bottom: 20px;
   }

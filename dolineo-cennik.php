@@ -4,12 +4,12 @@
  *
  * @package       DOLINEO
  * @author        Softgorillas
- * @version       1.0.0
+ * @version       1.0.2
  *
  * @wordpress-plugin
  * Plugin Name:   Dolineo Cennik
  * Description:   Dolineo Cennik / Vue.js
- * Version:       1.0.0
+ * Version:       1.0.2
  * Author:        Softgorillas
  * Author URI:    softgorillas.com/hire-us/
  * Text Domain:   dolineo-cennik
