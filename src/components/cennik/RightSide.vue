@@ -10,112 +10,155 @@
         class="picked__modules"
       >
         <h1 class="top__caption">Wybrane moduły</h1>
-        <div
-          class="analiza__item"
-          :class="{ 'analiza__item--active': isActiveModulePlatform }"
-        >
-          <!-- Platforma z katalogiem szkoleń -->
+        <div class="picked__modules--wrapper">
+          <div
+            class="analiza__item"
+            :class="{ 'analiza__item--active': isActiveModulePlatform }"
+          >
+            <!-- Platforma z katalogiem szkoleń -->
 
-          <div v-show="isActiveModulePlatform" class="item__holder__option">
-            <div class="cart__header__div">
-              <h1 class="cart__header">Platforma z katalogiem szkoleń</h1>
-            </div>
-            <div class="price__final__holder">
-              <span> + </span
-              ><span class="price__by__module">{{
-                PlatformPricing.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
-              }}</span
-              ><span>
-                PLN
-                <span class="first__month__indicator"> / 1 m-с </span>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Feedback360/Ocena okresowa -->
-
-        <div
-          v-show="isActiveModuleFeedback"
-          class="analiza__item"
-          :class="{ 'analiza__item--active': isActiveModuleFeedback }"
-        >
-          <div class="item__holder__option">
-            <div class="cart__header__div">
-              <h1 class="cart__header">Feedback360/Ocena okresowa</h1>
-            </div>
-            <div class="price__final__holder">
-              <span> + </span
-              ><span class="price__by__module">{{
-                FeedbackPricing.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
-              }}</span
-              ><span>
-                PLN
-                <span class="first__month__indicator"> / 1 m-с </span>
-              </span>
+            <div v-show="isActiveModulePlatform" class="item__holder__option">
+              <div class="cart__header__div">
+                <h1 class="cart__header">Platforma z katalogiem szkoleń</h1>
+              </div>
+              <div class="price__final__holder">
+                <span> + </span
+                ><span class="price__by__module">{{
+                  PlatformPricing.toString().replace(
+                    /\B(?=(\d{3})+(?!\d))/g,
+                    ' '
+                  )
+                }}</span
+                ><span>
+                  PLN
+                  <span class="first__month__indicator"> / 1 m-с </span>
+                </span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Zarządzanie przez cele -->
+          <!-- Feedback360/Ocena okresowa -->
 
-        <div
-          v-show="isActiveModuleManagement"
-          class="analiza__item"
-          :class="{ 'analiza__item--active': isActiveModuleManagement }"
-        >
-          <div class="item__holder__option">
-            <div class="cart__header__div">
-              <h1 class="cart__header">Zarządzanie przez cele</h1>
-            </div>
-            <div class="price__final__holder">
-              <span> + </span
-              ><span class="price__by__module">{{
-                ManagementPricing.toString().replace(
-                  /\B(?=(\d{3})+(?!\d))/g,
-                  ' '
-                )
-              }}</span
-              ><span>
-                PLN <span class="first__month__indicator">/ 1 m-с</span>
-              </span>
+          <div
+            v-show="isActiveModuleFeedback"
+            class="analiza__item"
+            :class="{ 'analiza__item--active': isActiveModuleFeedback }"
+          >
+            <div class="item__holder__option">
+              <div class="cart__header__div">
+                <h1 class="cart__header">Feedback360/Ocena okresowa</h1>
+              </div>
+              <div class="price__final__holder">
+                <span> + </span
+                ><span class="price__by__module">{{
+                  FeedbackPricing.toString().replace(
+                    /\B(?=(\d{3})+(?!\d))/g,
+                    ' '
+                  )
+                }}</span
+                ><span>
+                  PLN
+                  <span class="first__month__indicator"> / 1 m-с </span>
+                </span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Cena razem -->
+          <!-- Zarządzanie przez cele -->
 
-        <div
-          v-show="
-            (isActiveModuleFeedback && isActiveModulePlatform) ||
-            (isActiveModulePlatform && isActiveModuleManagement) ||
-            (isActiveModuleManagement && isActiveModuleFeedback) ||
-            (isActiveModuleFeedback &&
-              isActiveModulePlatform &&
-              isActiveModuleManagement)
-          "
-          class="analiza__item"
-        >
-          <div class="item__holder__option">
-            <div class="cart__header__div">
-              <h1 class="cart__header">Cena razem</h1>
+          <div
+            v-show="isActiveModuleManagement"
+            class="analiza__item"
+            :class="{ 'analiza__item--active': isActiveModuleManagement }"
+          >
+            <div class="item__holder__option">
+              <div class="cart__header__div">
+                <h1 class="cart__header">Zarządzanie przez cele</h1>
+              </div>
+              <div class="price__final__holder">
+                <span> + </span
+                ><span class="price__by__module">{{
+                  ManagementPricing.toString().replace(
+                    /\B(?=(\d{3})+(?!\d))/g,
+                    ' '
+                  )
+                }}</span
+                ><span>
+                  PLN <span class="first__month__indicator">/ 1 m-с</span>
+                </span>
+              </div>
             </div>
-            <div class="price__final__holder">
-              <span> + </span
-              ><span class="price__by__module"
-                >{{
-                  priceBefore.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
-                }}
-                PLN / 1 m-с</span
-              >
+          </div>
+
+          <!-- Cena razem -->
+
+          <div
+            v-show="
+              (isActiveModuleFeedback && isActiveModulePlatform) ||
+              (isActiveModulePlatform && isActiveModuleManagement) ||
+              (isActiveModuleManagement && isActiveModuleFeedback) ||
+              (isActiveModuleFeedback &&
+                isActiveModulePlatform &&
+                isActiveModuleManagement)
+            "
+            class="analiza__item"
+          >
+            <div class="item__holder__option">
+              <div class="cart__header__div">
+                <h1 class="cart__header"><strong>Cena razem</strong></h1>
+              </div>
+              <div class="price__final__holder">
+                <span><strong>+</strong></span
+                ><span class="price__by__module">
+                  <strong>
+                    {{
+                      priceBefore
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+                    }}
+                    PLN / 1 m-с
+                  </strong></span
+                >
+              </div>
             </div>
           </div>
         </div>
       </div>
 
+      <div
+        v-if="
+          !isActiveModulePlatform &
+          !isActiveModuleManagement &
+          !isActiveModuleFeedback
+        "
+        class="info-if-no-modules-selected"
+      >
+        <h1
+          class="morethanneed__caption"
+          style="
+            max-width: 90%;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 28px;
+            margin-bottom: 15px !important;
+          "
+        >
+          Aby poznać wycenę - wybierz interesujące Cię moduły
+        </h1>
+      </div>
+
       <h1 id="calculate__wp-fix" class="lower__caption">Rozliczenie</h1>
 
-      <div class="button__payment__block">
+      <div
+        class="button__payment__block"
+        :class="{
+          'border-bottom':
+            isActiveModulePlatform ||
+            isActiveModuleManagement ||
+            isActiveModuleFeedback,
+        }"
+      >
         <ul class="button__list">
           <li
             data-value="isSelectedYearly"
@@ -412,7 +455,15 @@
         </div>
       </div>
       <div class="description__container">
-        <span class="description__holder">Ceny netto bez VAT</span>
+        <span
+          v-if="
+            isActiveModulePlatform ||
+            isActiveModuleManagement ||
+            isActiveModuleFeedback
+          "
+          class="description__holder"
+          >Ceny netto bez VAT</span
+        >
       </div>
     </div>
 
@@ -428,29 +479,25 @@
       "
     >
       <div class="picked__modules">
-        <h1
-          style="margin-bottom: 20px !important; font-size: 26px"
-          class="top__caption"
-        >
+        <h1 style="font-size: 34px; line-height: 44px" class="top__caption">
           Rozwiązania szyte na miarę
         </h1>
         <h1
           class="morethanneed__caption"
-          style="max-width: 90%; text-align: center; font-size: 15px"
+          style="
+            max-width: 90%;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 28px;
+          "
         >
           Jeśli poszukujesz platformy dla
           <strong>więcej iż 1000 pracowników</strong> lub jesteś zainteresowany
           <strong>dedykowanymi rozwiązaniami</strong> dla swojej organizacji –
           napisz do nas w celu otrzymania indywidualnej oferty!
         </h1>
-        <div
-          style="
-            height: 1px;
-            background-color: #cfd6dd;
-            width: 100%;
-            margin-top: 30px;
-          "
-        ></div>
+
         <a
           href="https://dolineo.com/kontakt/"
           target="_blank"
@@ -1160,8 +1207,9 @@ export default {
     background-color: #f59300 !important;
     color: rgb(255, 255, 255) !important;
     cursor: pointer;
+
     &:hover {
-      background-color: #f59300;
+      background-color: #f7a933 !important;
       color: #fff;
     }
   }
@@ -1289,7 +1337,7 @@ export default {
 .analiza__item {
   font-family: 'Source Sans Pro';
   width: 100%;
-  margin-top: 15px;
+  // margin-top: 15px;
 }
 
 .korespondencja__item {
@@ -1308,7 +1356,7 @@ export default {
   min-width: 100%;
   margin: auto;
   padding-bottom: 16px;
-  border-bottom: 1px solid #cfd6dd;
+
   margin-top: 5px;
 }
 
@@ -1555,7 +1603,6 @@ export default {
     color: rgb(24, 24, 24);
     font-weight: 700;
     font-size: 30px;
-    margin-bottom: 0px;
   }
   .test {
     margin-top: 30px;
@@ -1563,7 +1610,7 @@ export default {
 
   .lower__caption {
     font-family: 'Source Sans Pro';
-    margin-bottom: 10px;
+    // margin-bottom: 10px !important;
     color: rgb(24, 24, 24);
     font-weight: 700;
     font-size: 30px;
@@ -1605,8 +1652,10 @@ export default {
   .picked__modules {
     max-height: 100%;
     max-width: 100%;
-    margin-bottom: 20px;
-    gap: 0px;
+
+    &--wrapper {
+      width: 100%;
+    }
   }
 
   .analiza__item {
@@ -1629,7 +1678,6 @@ export default {
 
   .button__payment__block {
     padding-bottom: 16px;
-    border-bottom: 1px solid #cfd6dd;
   }
 
   .button__list {
@@ -1845,5 +1893,9 @@ export default {
   margin: 0;
   font-weight: 400;
   font-family: 'Proxima Nova', sans-serif;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #cfd6dd;
 }
 </style>

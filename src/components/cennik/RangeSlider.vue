@@ -20,7 +20,11 @@
       id="dolineo-range-slider--subtitle__wp-fix"
       class="dolineo-range-slider--subtitle"
     >
-      Liczba pracowników: {{ employeValue }} osób
+      Liczba pracowników:
+      <strong
+        ><span>{{ employeValue }}</span></strong
+      >
+      osób
     </div>
   </div>
 </template>
@@ -109,8 +113,18 @@ export default {
 .slider {
   &--min,
   &--max {
-    font-size: 22px;
-    color: #7a7a7a;
+    // font-size: 22px;
+    // color: #7a7a7a;
+
+    color: #111111;
+    font-family: Raleway, sans-serif;
+    font-size: 26px;
+    font-weight: 400;
+
+    // color: #f59b00;
+    // font-family: Raleway, sans-serif;
+    // font-size: 33px;
+    // font-weight: 700;
   }
   &--min {
     padding-right: 50px;
@@ -179,13 +193,17 @@ export default {
   }
 
   &--subtitle {
-    color: $accent;
+    color: #111111;
     font-family: Raleway, sans-serif;
-    font-size: 33px;
-    font-weight: 700;
+    font-size: 26px;
+    font-weight: 400;
     @media (max-width: 1200px) {
       text-align: center;
       font-size: 21px;
+    }
+
+    span {
+      color: $accent;
     }
   }
 }
