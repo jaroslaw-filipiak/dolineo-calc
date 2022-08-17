@@ -1,5 +1,5 @@
 <template>
-  <div id="dolineo-cennik-wrapper" style="padding-top: 100px">
+  <div id="dolineo-cennik-wrapper">
     <RangeSlider></RangeSlider>
     <div class="dolineo-container">
       <LeftSide></LeftSide>

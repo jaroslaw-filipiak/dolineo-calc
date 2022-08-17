@@ -1399,7 +1399,7 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 0.4em 1em;
+  padding: 0.6em 1em;
   background-color: #9fdad0;
   border: 2px solid #3fb5a1;
   border-radius: 6px;
@@ -1715,7 +1715,7 @@ export default {
     justify-content: center;
     align-items: center;
     width: 240px;
-    padding: 0.4em 1em;
+    padding: 0.6em 1em;
     background-color: #9fdad0;
     border: 2px solid #3fb5a1;
     border-radius: 6px;

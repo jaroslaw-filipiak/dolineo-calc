@@ -11,3 +11,7 @@
 #calculate__wp-fix {
   margin-bottom: 15px !important;
 }
+
+.analiza__item {
+  max-height: 30px !important;
+}
