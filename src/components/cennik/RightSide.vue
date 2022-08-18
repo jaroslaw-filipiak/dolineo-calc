@@ -1251,9 +1251,13 @@ export default {
 
 .main__window {
   width: 100%;
-  min-width: 355px;
+
   border-radius: 24px;
   background-color: var(--c_bg);
+
+  @media (min-width: 768px) {
+    min-width: 355px;
+  }
 
   @media (min-width: 1200px) {
     box-shadow: 4px 4px 32px -6px #ffffff, 6px 6px 48px -6px #dfdede;
@@ -1299,8 +1303,13 @@ export default {
 }
 
 .cart__header__div {
-  min-width: 166px;
-  width: 65%;
+  width: 50%;
+  padding-right: 20px;
+  @media (min-width: 768px) {
+    min-width: 166px;
+    width: 65%;
+    padding-right: 0;
+  }
 }
 
 .cart__header {
@@ -1345,9 +1354,13 @@ export default {
 }
 .item__holder__option {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   min-width: 100%;
+
+  @media (min-width: 768px) {
+    justify-content: center;
+  }
 }
 
 .button__payment__block {
@@ -1535,9 +1548,11 @@ export default {
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
-  @media (max-width: 1200px) {
-    width: 90%;
-    padding: 0px 20px;
+  width: 90%;
+  padding: 0px 20px;
+
+  @media (min-width: 1200px) {
+    padding: 0px;
   }
 }
 
