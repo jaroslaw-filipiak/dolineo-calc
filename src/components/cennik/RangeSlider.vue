@@ -118,8 +118,12 @@ export default {
 
     color: #111111;
     font-family: Raleway, sans-serif;
-    font-size: 26px;
+    font-size: 21px;
     font-weight: 400;
+
+    @media (min-width: 768px) {
+      font-size: 26px;
+    }
 
     // color: #f59b00;
     // font-family: Raleway, sans-serif;
@@ -127,13 +131,19 @@ export default {
     // font-weight: 700;
   }
   &--min {
-    padding-right: 50px;
-    margin-top: 20px;
+    margin-top: -30px;
+    @media (min-width: 768px) {
+      padding-right: 50px;
+      margin-top: 20px;
+    }
   }
 
   &--max {
-    padding-left: 50px;
-    margin-top: 20px;
+    margin-top: -30px;
+    @media (min-width: 768px) {
+      padding-left: 50px;
+      margin-top: 20px;
+    }
   }
   &-wrapper {
     display: flex;
@@ -141,12 +151,13 @@ export default {
     justify-content: center;
   }
   &-target {
-    width: 260px;
+    width: 180px;
     height: 10px !important;
-    margin: 70px 0px 50px 0px;
+    margin: 23px 20px 50px 20px !important;
 
     @media (min-width: 768px) {
       width: 560px;
+      margin: 70px 0px 50px 0px !important;
     }
 
     @media (min-width: 1200px) {
@@ -187,8 +198,10 @@ export default {
   &--title {
     font-size: 34px;
     font-weight: 700;
+    margin-bottom: 40px !important;
     @media (max-width: 1200px) {
       text-align: center;
+      margin-bottom: 0px;
     }
   }
 
@@ -200,6 +213,7 @@ export default {
     @media (max-width: 1200px) {
       text-align: center;
       font-size: 21px;
+      width: 90%;
     }
 
     span {

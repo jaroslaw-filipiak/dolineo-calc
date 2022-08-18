@@ -9,9 +9,31 @@
 }
 
 .analiza__item {
-  max-height: 30px !important;
+  @media (min-width: 768px) {
+    max-height: 30px !important;
+  }
+}
+
+.cart__header {
+  line-height: 16px;
+}
+
+.item__holder__option {
+  margin-bottom: 20px !important;
+
+  @media (min-width: 768px) {
+    margin-bottom: 0px !important;
+  }
 }
 
 #calculate__wp-fix {
   margin-bottom: 25px !important;
+}
+
+.picked__modules--wrapper {
+  margin-top: 20px;
+
+  @media (min-width: 768px) {
+    margin-top: 0px;
+  }
 }
