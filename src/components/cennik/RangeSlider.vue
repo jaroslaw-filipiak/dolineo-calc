@@ -131,19 +131,13 @@ export default {
     // font-weight: 700;
   }
   &--min {
-    margin-top: -30px;
-    @media (min-width: 768px) {
-      padding-right: 50px;
-      margin-top: 20px;
-    }
+    padding-right: 50px;
+    margin-top: 20px;
   }
 
   &--max {
-    margin-top: -30px;
-    @media (min-width: 768px) {
-      padding-left: 50px;
-      margin-top: 20px;
-    }
+    padding-left: 50px;
+    margin-top: 20px;
   }
   &-wrapper {
     display: flex;
@@ -153,11 +147,10 @@ export default {
   &-target {
     width: 180px;
     height: 10px !important;
-    margin: 23px 20px 50px 20px !important;
+    margin: 70px 0px 50px 0px;
 
     @media (min-width: 768px) {
       width: 560px;
-      margin: 70px 0px 50px 0px !important;
     }
 
     @media (min-width: 1200px) {
@@ -198,7 +191,6 @@ export default {
   &--title {
     font-size: 34px;
     font-weight: 700;
-    margin-bottom: 40px !important;
     @media (max-width: 1200px) {
       text-align: center;
       margin-bottom: 0px;
