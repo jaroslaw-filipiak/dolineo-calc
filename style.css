@@ -1,12 +1,12 @@
 /* special styles only for WP instance */
 
+.description {
+  display: none !important;
+}
+
 @media (max-width: 768px) {
   .undercaption {
     margin: 10px 0px !important;
-  }
-
-  .description {
-    display: none !important;
   }
 }
 
@@ -53,6 +53,20 @@
   }
 }
 
+.parent {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  width: 100%;
+  justify-content: space-between;
+  position: relative;
+}
+
+.options__hold {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .slider--max {
     padding-left: 10px;
@@ -64,16 +78,6 @@
     padding-right: 30px;
     position: relative;
     top: 19px;
-  }
-
-  .parent {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    width: 100%;
-    justify-content: space-between;
-    position: relative;
   }
 
   .switcher {
