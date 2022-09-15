@@ -23,7 +23,7 @@
         <h1 class="undercaption">Feedback360/Ocena okresowa</h1>
         <div class="title__row">
           <p class="description">
-            umożliwiające przprowadzenie procesu udzielania informacji zwrotnej
+            umożliwiające przeprowadzenie procesu udzielania informacji zwrotnej
             metodą 180/270/360 stopni
           </p>
           <div class="switcher">
@@ -36,8 +36,8 @@
         <h1 class="undercaption">Zarządzanie przez cele</h1>
         <div class="title__row">
           <p class="description">
-            umożliwiające wyznaczanie i monitorowanie realizaji celów rocznych i
-            kwartalnych
+            umożliwiające wyznaczanie i monitorowanie realizacji celów rocznych
+            i kwartalnych
           </p>
           <div class="switcher">
             <Toggle @change="updateDataInAllModules" v-model="management" />
