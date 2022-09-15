@@ -19,7 +19,10 @@
 
             <div v-show="isActiveModulePlatform" class="item__holder__option">
               <div class="cart__header__div">
-                <h1 class="cart__header">Platforma z katalogiem szkoleń</h1>
+                <h1 class="cart__header">
+                  Platforma <br />
+                  z katalogiem szkoleń
+                </h1>
               </div>
               <div class="price__final__holder">
                 <span> + </span
@@ -479,7 +482,17 @@
       "
     >
       <div class="picked__modules">
-        <h1 style="font-size: 34px; line-height: 44px" class="top__caption">
+        <h1
+          style="
+            font-size: 34px;
+            line-height: 44px;
+            margin-bottom: 30px;
+
+            position: relative;
+            top: -15px; ;
+          "
+          class="top__caption"
+        >
           Rozwiązania szyte na miarę
         </h1>
         <h1

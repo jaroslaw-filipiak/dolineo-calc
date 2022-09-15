@@ -191,6 +191,8 @@ export default {
   &--title {
     font-size: 34px;
     font-weight: 700;
+    position: relative;
+    top: 15px;
     @media (max-width: 1200px) {
       text-align: center;
       margin-bottom: 0px;

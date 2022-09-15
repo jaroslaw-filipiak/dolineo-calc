@@ -29,6 +29,8 @@ export default {
   align-items: center;
   justify-content: center;
   gap: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
 
   @media (max-width: 1200px) {
     flex-direction: column;

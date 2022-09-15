@@ -1,15 +1,29 @@
 /* special styles only for WP instance */
 
+@media (max-width: 768px) {
+  .undercaption {
+    margin: 10px 0px !important;
+  }
+
+  .description {
+    display: none !important;
+  }
+}
+
+.undercaption {
+  line-height: 19px;
+}
+
 #dolineo-range-slider--subtitle__wp-fix {
-  margin-top: 60px !important;
+  margin-top: 40px !important;
 }
 
 #bottom_elements__wp-fix {
   margin-top: 20px !important;
 }
 
-.analiza__item {
-  @media (min-width: 768px) {
+@media (min-width: 768px) {
+  .analiza__item {
     max-height: 30px !important;
   }
 }
@@ -18,22 +32,81 @@
   line-height: 16px;
 }
 
-.item__holder__option {
-  margin-bottom: 20px !important;
-
-  @media (min-width: 768px) {
+@media (min-width: 768px) {
+  .item__holder__option {
     margin-bottom: 0px !important;
   }
+}
+
+.item__holder__option {
+  margin-bottom: 20px !important;
 }
 
 #calculate__wp-fix {
   margin-bottom: 25px !important;
 }
 
-.picked__modules--wrapper {
-  margin-top: 20px;
-
-  @media (min-width: 768px) {
+@media (min-width: 768px) {
+  .picked__modules--wrapper {
+    margin-top: 20px;
     margin-top: 0px;
+  }
+}
+
+@media (max-width: 768px) {
+  .slider--max {
+    padding-left: 10px;
+    position: relative;
+    top: 19px;
+  }
+
+  .slider--min {
+    padding-right: 30px;
+    position: relative;
+    top: 19px;
+  }
+
+  .parent {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    width: 100%;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .switcher {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .parent .undercaption {
+    max-width: 70%;
+    line-height: 20px;
+  }
+
+  .description {
+    display: none;
+  }
+
+  .choose__modules,
+  .rower {
+    width: 100%;
+    padding: 0;
+  }
+
+  .worker__price {
+    box-sizing: border-box;
+  }
+
+  .main__window {
+    margin-top: 20px;
+  }
+
+  .picked__modules--wrapper {
+    min-width: 100%;
+    margin-top: 20px;
   }
 }

@@ -4,12 +4,13 @@
     <div class="panel__holder">
       <div class="parent">
         <h1 class="undercaption">
-          Platforma e-learningowa z katalogiem szkoleń gotowych
+          Platforma e-learningowa <br />
+          z katalogiem 200 szkoleń gotowych
         </h1>
         <div class="title__row">
           <p class="description">
-            W cenie m.in.: onboarding, kreator testów, kreator ankiet, kreator
-            szkoleń
+            wraz z kreatorem szkoleń, testów, ankiet, ścieżkami szkoleniowymi
+            oraz onboardingiem
           </p>
 
           <div class="switcher">
@@ -22,8 +23,8 @@
         <h1 class="undercaption">Feedback360/Ocena okresowa</h1>
         <div class="title__row">
           <p class="description">
-            W cenie m.in.: onboarding, kreator testów, kreator ankiet, kreator
-            szkoleń
+            umożliwiające przprowadzenie procesu udzielania informacji zwrotnej
+            metodą 180/270/360 stopni
           </p>
           <div class="switcher">
             <Toggle @change="updateDataInAllModules" v-model="feedback" />
@@ -35,8 +36,8 @@
         <h1 class="undercaption">Zarządzanie przez cele</h1>
         <div class="title__row">
           <p class="description">
-            W cenie m.in.: onboarding, kreator testów, kreator ankiet, kreator
-            szkoleń
+            umożliwiające wyznaczanie i monitorowanie realizaji celów rocznych i
+            kwartalnych
           </p>
           <div class="switcher">
             <Toggle @change="updateDataInAllModules" v-model="management" />
